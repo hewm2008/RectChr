@@ -183,7 +183,7 @@ elsif ($SNPNumber>1000)
 }
 
 
-open (OB,">$OutPut.cofi") || die "output file can't open $!" ;
+open (OB,">$OutPut.conf") || die "output file can't open $!" ;
 open (OC,">$OutPut.col") || die "output file can't open $!" ;
 print OC "Ref=\"#e41a1c\"\n";
 print OC "ALT=\"#4daf4a\"\n";
@@ -246,12 +246,12 @@ if  ( !(-e $RectChr) )
 	if  ( !(-e $RectChr) )
 	{
 		print "Can't found the [RectChr] in your \$PATH, plase check and the  run it";
-		print "  RectChr  -InConfi  $OutPut.cofi -OutPut $OutPut \n";
+		print "  RectChr  -InConfi  $OutPut.conf -OutPut $OutPut \n";
 	}
 }
 
 
-system("  $RectChr  -InConfi  $OutPut.cofi -OutPut $OutPut");
+system("  $RectChr  -InConfi  $OutPut.conf -OutPut $OutPut");
 
 ######################swimming in the sky and flying in the sea ###########################
 
