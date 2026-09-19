@@ -1,0 +1,3640 @@
+{
+ "meta": {
+  "tool": "RectChr",
+  "version": "1.50",
+  "xlsx": "NewParaList.xlsx",
+  "generated_by": "gui/tools/gen_schema.py"
+ },
+ "categories": {
+  "files": {
+   "zh": "数据文件",
+   "en": "Data files"
+  },
+  "canvas": {
+   "zh": "画布",
+   "en": "Canvas"
+  },
+  "chr": {
+   "zh": "染色体",
+   "en": "Chromosomes"
+  },
+  "title": {
+   "zh": "标题",
+   "en": "Title"
+  },
+  "axis": {
+   "zh": "坐标轴",
+   "en": "Axes"
+  },
+  "track": {
+   "zh": "轨道通用",
+   "en": "Track general"
+  },
+  "data": {
+   "zh": "数据处理",
+   "en": "Data processing"
+  },
+  "label": {
+   "zh": "轨道名称",
+   "en": "Track label"
+  },
+  "geometry": {
+   "zh": "几何属性",
+   "en": "Geometry"
+  },
+  "color_legend": {
+   "zh": "颜色与图例",
+   "en": "Colors & legend"
+  },
+  "svg": {
+   "zh": "样式 (SVG)",
+   "en": "Style (SVG)"
+  }
+ },
+ "plot_types": [
+  {
+   "name": "heatmap",
+   "aliases": [],
+   "zh": "热图",
+   "en": "Heatmap"
+  },
+  {
+   "name": "highlights",
+   "aliases": [],
+   "zh": "高亮",
+   "en": "Highlights"
+  },
+  {
+   "name": "point",
+   "aliases": [
+    "scatter",
+    "points"
+   ],
+   "zh": "点图",
+   "en": "Scatter / point"
+  },
+  {
+   "name": "line",
+   "aliases": [
+    "lines"
+   ],
+   "zh": "线图",
+   "en": "Line"
+  },
+  {
+   "name": "hist",
+   "aliases": [
+    "histogram"
+   ],
+   "zh": "柱状图",
+   "en": "Histogram"
+  },
+  {
+   "name": "text",
+   "aliases": [],
+   "zh": "文本",
+   "en": "Text"
+  },
+  {
+   "name": "shape",
+   "aliases": [
+    "shapes",
+    "Shape"
+   ],
+   "zh": "形状",
+   "en": "Shape"
+  },
+  {
+   "name": "ridgeline",
+   "aliases": [],
+   "zh": "山脊线",
+   "en": "Ridgeline"
+  },
+  {
+   "name": "PairWiseLink",
+   "aliases": [
+    "pairwiselink"
+   ],
+   "zh": "彩虹链接",
+   "en": "Pairwise link"
+  },
+  {
+   "name": "PairWiseLinkV2",
+   "aliases": [
+    "pairwiselinkV2"
+   ],
+   "zh": "彩虹链接V2",
+   "en": "Pairwise link V2"
+  },
+  {
+   "name": "LinkS",
+   "aliases": [
+    "LinkSelf"
+   ],
+   "zh": "自连接",
+   "en": "Self link"
+  },
+  {
+   "name": "heatmapAnimated",
+   "aliases": [],
+   "zh": "动态热图",
+   "en": "Animated heatmap"
+  },
+  {
+   "name": "histAnimated",
+   "aliases": [
+    "histogramAnimated"
+   ],
+   "zh": "动态柱状图",
+   "en": "Animated histogram"
+  },
+  {
+   "name": "highlightsAnimated",
+   "aliases": [],
+   "zh": "动态高亮",
+   "en": "Animated highlights"
+  },
+  {
+   "name": "link",
+   "aliases": [
+    "Link"
+   ],
+   "zh": "Link(遗留)",
+   "en": "Link (legacy)",
+   "legacy": true
+  }
+ ],
+ "palettes": {
+  "builtin": {
+   "Accent": {
+    "max": 8,
+    "qualitative": true,
+    "colors": [
+     "#7FC97F",
+     "#BEAED4",
+     "#FDC086",
+     "#FFFF99",
+     "#386CB0",
+     "#F0027F",
+     "#BF5B17",
+     "#666666"
+    ]
+   },
+   "Blues": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#F7FBFF",
+     "#DEEBF7",
+     "#C6DBEF",
+     "#9ECAE1",
+     "#6BAED6",
+     "#4292C6",
+     "#2171B5",
+     "#08519C",
+     "#08306B"
+    ]
+   },
+   "BrBG": {
+    "max": 11,
+    "qualitative": false,
+    "colors": [
+     "#543005",
+     "#8C510A",
+     "#BF812D",
+     "#DFC27D",
+     "#F6E8C3",
+     "#F5F5F5",
+     "#C7EAE5",
+     "#80CDC1",
+     "#35978F",
+     "#01665E",
+     "#003C30"
+    ]
+   },
+   "BuGn": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#F7FCFD",
+     "#E5F5F9",
+     "#CCECE6",
+     "#99D8C9",
+     "#66C2A4",
+     "#41AE76",
+     "#238B45",
+     "#006D2C",
+     "#00441B"
+    ]
+   },
+   "BuPu": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#F7FCFD",
+     "#E0ECF4",
+     "#BFD3E6",
+     "#9EBCDA",
+     "#8C96C6",
+     "#8C6BB1",
+     "#88419D",
+     "#810F7C",
+     "#4D004B"
+    ]
+   },
+   "Dark2": {
+    "max": 8,
+    "qualitative": true,
+    "colors": [
+     "#1B9E77",
+     "#D95F02",
+     "#7570B3",
+     "#E7298A",
+     "#66A61E",
+     "#E6AB02",
+     "#A6761D",
+     "#666666"
+    ]
+   },
+   "GnBu": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#F7FCF0",
+     "#E0F3DB",
+     "#CCEBC5",
+     "#A8DDB5",
+     "#7BCCC4",
+     "#4EB3D3",
+     "#2B8CBE",
+     "#0868AC",
+     "#084081"
+    ]
+   },
+   "Greens": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#F7FCF5",
+     "#E5F5E0",
+     "#C7E9C0",
+     "#A1D99B",
+     "#74C476",
+     "#41AB5D",
+     "#238B45",
+     "#006D2C",
+     "#00441B"
+    ]
+   },
+   "Greys": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#FFFFFF",
+     "#F0F0F0",
+     "#D9D9D9",
+     "#BDBDBD",
+     "#969696",
+     "#737373",
+     "#525252",
+     "#252525",
+     "#000000"
+    ]
+   },
+   "Oranges": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#FFF5EB",
+     "#FEE6CE",
+     "#FDD0A2",
+     "#FDAE6B",
+     "#FD8D3C",
+     "#F16913",
+     "#D94801",
+     "#A63603",
+     "#7F2704"
+    ]
+   },
+   "OrRd": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#FFF7EC",
+     "#FEE8C8",
+     "#FDD49E",
+     "#FDBB84",
+     "#FC8D59",
+     "#EF6548",
+     "#D7301F",
+     "#B30000",
+     "#7F0000"
+    ]
+   },
+   "Paired": {
+    "max": 12,
+    "qualitative": true,
+    "colors": [
+     "#A6CEE3",
+     "#1F78B4",
+     "#B2DF8A",
+     "#33A02C",
+     "#FB9A99",
+     "#E31A1C",
+     "#FDBF6F",
+     "#FF7F00",
+     "#CAB2D6",
+     "#6A3D9A",
+     "#FFFF99",
+     "#B15928"
+    ]
+   },
+   "Pastel1": {
+    "max": 9,
+    "qualitative": true,
+    "colors": [
+     "#FBB4AE",
+     "#B3CDE3",
+     "#CCEBC5",
+     "#DECBE4",
+     "#FED9A6",
+     "#FFFFCC",
+     "#E5D8BD",
+     "#FDDAEC",
+     "#F2F2F2"
+    ]
+   },
+   "Pastel2": {
+    "max": 8,
+    "qualitative": true,
+    "colors": [
+     "#B3E2CD",
+     "#FDCDAC",
+     "#CBD5E8",
+     "#F4CAE4",
+     "#E6F5C9",
+     "#FFF2AE",
+     "#F1E2CC",
+     "#CCCCCC"
+    ]
+   },
+   "PiYG": {
+    "max": 11,
+    "qualitative": false,
+    "colors": [
+     "#8E0152",
+     "#C51B7D",
+     "#DE77AE",
+     "#F1B6DA",
+     "#FDE0EF",
+     "#F7F7F7",
+     "#E6F5D0",
+     "#B8E186",
+     "#7FBC41",
+     "#4D9221",
+     "#276419"
+    ]
+   },
+   "PRGn": {
+    "max": 11,
+    "qualitative": false,
+    "colors": [
+     "#40004B",
+     "#762A83",
+     "#9970AB",
+     "#C2A5CF",
+     "#E7D4E8",
+     "#F7F7F7",
+     "#D9F0D3",
+     "#A6DBA0",
+     "#5AAE61",
+     "#1B7837",
+     "#00441B"
+    ]
+   },
+   "PuBu": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#FFF7FB",
+     "#ECE7F2",
+     "#D0D1E6",
+     "#A6BDDB",
+     "#74A9CF",
+     "#3690C0",
+     "#0570B0",
+     "#045A8D",
+     "#023858"
+    ]
+   },
+   "PuBuGn": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#FFF7FB",
+     "#ECE2F0",
+     "#D0D1E6",
+     "#A6BDDB",
+     "#67A9CF",
+     "#3690C0",
+     "#02818A",
+     "#016C59",
+     "#014636"
+    ]
+   },
+   "PuOr": {
+    "max": 11,
+    "qualitative": false,
+    "colors": [
+     "#7F3B08",
+     "#B35806",
+     "#E08214",
+     "#FDB863",
+     "#FEE0B6",
+     "#F7F7F7",
+     "#D8DAEB",
+     "#B2ABD2",
+     "#8073AC",
+     "#542788",
+     "#2D004B"
+    ]
+   },
+   "PuRd": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#F7F4F9",
+     "#E7E1EF",
+     "#D4B9DA",
+     "#C994C7",
+     "#DF65B0",
+     "#E7298A",
+     "#CE1256",
+     "#980043",
+     "#67001F"
+    ]
+   },
+   "Purples": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#FCFBFD",
+     "#EFEDF5",
+     "#DADAEB",
+     "#BCBDDC",
+     "#9E9AC8",
+     "#807DBA",
+     "#6A51A3",
+     "#54278F",
+     "#3F007D"
+    ]
+   },
+   "RdBu": {
+    "max": 11,
+    "qualitative": false,
+    "colors": [
+     "#67001F",
+     "#B2182B",
+     "#D6604D",
+     "#F4A582",
+     "#FDDBC7",
+     "#F7F7F7",
+     "#D1E5F0",
+     "#92C5DE",
+     "#4393C3",
+     "#2166AC",
+     "#053061"
+    ]
+   },
+   "RdGy": {
+    "max": 11,
+    "qualitative": false,
+    "colors": [
+     "#67001F",
+     "#B2182B",
+     "#D6604D",
+     "#F4A582",
+     "#FDDBC7",
+     "#FFFFFF",
+     "#E0E0E0",
+     "#BABABA",
+     "#878787",
+     "#4D4D4D",
+     "#1A1A1A"
+    ]
+   },
+   "RdPu": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#FFF7F3",
+     "#FDE0DD",
+     "#FCC5C0",
+     "#FA9FB5",
+     "#F768A1",
+     "#DD3497",
+     "#AE017E",
+     "#7A0177",
+     "#49006A"
+    ]
+   },
+   "Reds": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#FFF5F0",
+     "#FEE0D2",
+     "#FCBBA1",
+     "#FC9272",
+     "#FB6A4A",
+     "#EF3B2C",
+     "#CB181D",
+     "#A50F15",
+     "#67000D"
+    ]
+   },
+   "RdYlBu": {
+    "max": 11,
+    "qualitative": false,
+    "colors": [
+     "#A50026",
+     "#D73027",
+     "#F46D43",
+     "#FDAE61",
+     "#FEE090",
+     "#FFFFBF",
+     "#E0F3F8",
+     "#ABD9E9",
+     "#74ADD1",
+     "#4575B4",
+     "#313695"
+    ]
+   },
+   "RdYlGn": {
+    "max": 11,
+    "qualitative": false,
+    "colors": [
+     "#A50026",
+     "#D73027",
+     "#F46D43",
+     "#FDAE61",
+     "#FEE08B",
+     "#FFFFBF",
+     "#D9EF8B",
+     "#A6D96A",
+     "#66BD63",
+     "#1A9850",
+     "#006837"
+    ]
+   },
+   "GnYlRd": {
+    "max": 11,
+    "qualitative": false,
+    "colors": [
+     "#006837",
+     "#1A9850",
+     "#66BD63",
+     "#A6D96A",
+     "#D9EF8B",
+     "#FFFFBF",
+     "#FEE08B",
+     "#FDAE61",
+     "#F46D43",
+     "#D73027",
+     "#A50026"
+    ]
+   },
+   "Set1": {
+    "max": 9,
+    "qualitative": true,
+    "colors": [
+     "#E41A1C",
+     "#377EB8",
+     "#4DAF4A",
+     "#984EA3",
+     "#FF7F00",
+     "#FFFF33",
+     "#A65628",
+     "#F781BF",
+     "#999999"
+    ]
+   },
+   "Set2": {
+    "max": 8,
+    "qualitative": true,
+    "colors": [
+     "#66C2A5",
+     "#FC8D62",
+     "#8DA0CB",
+     "#E78AC3",
+     "#A6D854",
+     "#FFD92F",
+     "#E5C494",
+     "#B3B3B3"
+    ]
+   },
+   "Set3": {
+    "max": 12,
+    "qualitative": true,
+    "colors": [
+     "#8DD3C7",
+     "#FFFFB3",
+     "#BEBADA",
+     "#FB8072",
+     "#80B1D3",
+     "#FDB462",
+     "#B3DE69",
+     "#FCCDE5",
+     "#D9D9D9",
+     "#BC80BD",
+     "#CCEBC5",
+     "#FFED6F"
+    ]
+   },
+   "Spectral": {
+    "max": 11,
+    "qualitative": false,
+    "colors": [
+     "#9E0142",
+     "#D53E4F",
+     "#F46D43",
+     "#FDAE61",
+     "#FEE08B",
+     "#FFFFBF",
+     "#E6F598",
+     "#ABDDA4",
+     "#66C2A5",
+     "#3288BD",
+     "#5E4FA2"
+    ]
+   },
+   "YlGn": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#FFFFE5",
+     "#F7FCB9",
+     "#D9F0A3",
+     "#ADDD8E",
+     "#78C679",
+     "#41AB5D",
+     "#238443",
+     "#006837",
+     "#004529"
+    ]
+   },
+   "YlGnBu": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#FFFFD9",
+     "#EDF8B1",
+     "#C7E9B4",
+     "#7FCDBB",
+     "#41B6C4",
+     "#1D91C0",
+     "#225EA8",
+     "#253494",
+     "#081D58"
+    ]
+   },
+   "YlOrBr": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#FFFFE5",
+     "#FFF7BC",
+     "#FEE391",
+     "#FEC44F",
+     "#FE9929",
+     "#EC7014",
+     "#CC4C02",
+     "#993404",
+     "#662506"
+    ]
+   },
+   "YlOrRd": {
+    "max": 9,
+    "qualitative": false,
+    "colors": [
+     "#FFFFCC",
+     "#FFEDA0",
+     "#FED976",
+     "#FEB24C",
+     "#FD8D3C",
+     "#FC4E2A",
+     "#E31A1C",
+     "#BD0026",
+     "#800026"
+    ]
+   }
+  },
+  "files": {
+   "aaas": {
+    "colors": [
+     "#3B4992",
+     "#EE0000",
+     "#008B45",
+     "#631879",
+     "#008280",
+     "#BB0021",
+     "#5F559B",
+     "#A20056",
+     "#808180",
+     "#1B1919"
+    ]
+   },
+   "atlassian": {
+    "colors": [
+     "#4688EC",
+     "#94C748",
+     "#C97CF4",
+     "#FCA700",
+     "#1558BC",
+     "#964AC0",
+     "#42B2D7",
+     "#E06C00"
+    ]
+   },
+   "bmj": {
+    "colors": [
+     "#2A6EBB",
+     "#F0AB00",
+     "#C50084",
+     "#7D5CC6",
+     "#E37222",
+     "#69BE28",
+     "#00B2A9",
+     "#CD202C",
+     "#747678"
+    ]
+   },
+   "bs5": {
+    "colors": [
+     "#F8F9FA",
+     "#E9ECEF",
+     "#DEE2E6",
+     "#CED4DA",
+     "#ADB5BD",
+     "#6C757D",
+     "#495057",
+     "#343A40",
+     "#212529"
+    ]
+   },
+   "cosmic": {
+    "colors": [
+     "#5ABCEB",
+     "#050708",
+     "#D33C32",
+     "#CBCACB",
+     "#ABCD72",
+     "#E7C9C6"
+    ]
+   },
+   "d3": {
+    "colors": [
+     "#3182BD",
+     "#E6550D",
+     "#31A354",
+     "#756BB1",
+     "#636363",
+     "#6BAED6",
+     "#FD8D3C",
+     "#74C476",
+     "#9E9AC8",
+     "#969696",
+     "#9ECAE1",
+     "#FDAE6B",
+     "#A1D99B",
+     "#BCBDDC",
+     "#BDBDBD",
+     "#C6DBEF",
+     "#FDD0A2",
+     "#C7E9C0",
+     "#DADAEB",
+     "#D9D9D9"
+    ]
+   },
+   "flatui": {
+    "colors": [
+     "#F9CA24",
+     "#F0932B",
+     "#EB4D4B",
+     "#6AB04C",
+     "#C7ECEE",
+     "#22A6B3",
+     "#BE2EDD",
+     "#4834D4",
+     "#130F40",
+     "#535C68"
+    ]
+   },
+   "frontiers": {
+    "colors": [
+     "#D51317",
+     "#F39200",
+     "#EFD500",
+     "#95C11F",
+     "#007B3D",
+     "#31B7BC",
+     "#0094CD",
+     "#164194",
+     "#6F286A",
+     "#706F6F"
+    ]
+   },
+   "futurama": {
+    "colors": [
+     "#FF6F00",
+     "#C71000",
+     "#008EA0",
+     "#8A4198",
+     "#5A9599",
+     "#FF6348",
+     "#84D7E1",
+     "#FF95A8",
+     "#3D3B25",
+     "#ADE2D0",
+     "#1A5354",
+     "#3F4041"
+    ]
+   },
+   "gsea": {
+    "colors": [
+     "#4500AD",
+     "#2700D1",
+     "#6B58EF",
+     "#8888FF",
+     "#C7C1FF",
+     "#D5D5FF",
+     "#FFC0E5",
+     "#FF8989",
+     "#FF7080",
+     "#FF5A5A",
+     "#EF4040",
+     "#D60C00"
+    ]
+   },
+   "igv": {
+    "colors": [
+     "#5773CC",
+     "#FFB900"
+    ]
+   },
+   "jama": {
+    "colors": [
+     "#374E55",
+     "#DF8F44",
+     "#00A1D5",
+     "#B24745",
+     "#79AF97",
+     "#6A6599",
+     "#80796B"
+    ]
+   },
+   "jco": {
+    "colors": [
+     "#0073C2",
+     "#EFC000",
+     "#868686",
+     "#CD534C",
+     "#7AA6DC",
+     "#003C67",
+     "#8F7700",
+     "#3B3B3B",
+     "#A73030",
+     "#4A6990"
+    ]
+   },
+   "lancet": {
+    "colors": [
+     "#00468B",
+     "#ED0000",
+     "#42B540",
+     "#0099B4",
+     "#925E9F",
+     "#FDAF91",
+     "#AD002A",
+     "#ADB6B6",
+     "#1B1919"
+    ]
+   },
+   "locuszoom": {
+    "colors": [
+     "#D43F3A",
+     "#EEA236",
+     "#5CB85C",
+     "#46B8DA",
+     "#357EBD",
+     "#9632B8",
+     "#B8B8B8"
+    ]
+   },
+   "material": {
+    "colors": [
+     "#ECEFF1",
+     "#CFD8DC",
+     "#B0BEC5",
+     "#90A4AE",
+     "#78909C",
+     "#607D8B",
+     "#546E7A",
+     "#455A64",
+     "#37474F",
+     "#263238"
+    ]
+   },
+   "nejm": {
+    "colors": [
+     "#BC3C29",
+     "#0072B5",
+     "#E18727",
+     "#20854E",
+     "#7876B1",
+     "#6F99AD",
+     "#FFDC91",
+     "#EE4C97"
+    ]
+   },
+   "npg": {
+    "colors": [
+     "#E64B35",
+     "#4DBBD5",
+     "#00A087",
+     "#3C5488",
+     "#F39B7F",
+     "#8491B4",
+     "#91D1C2",
+     "#DC0000",
+     "#7E6148",
+     "#B09C85"
+    ]
+   },
+   "observable": {
+    "colors": [
+     "#4269D0",
+     "#EFB118",
+     "#FF725C",
+     "#6CC5B0",
+     "#3CA951",
+     "#FF8AB7",
+     "#A463F2",
+     "#97BBF5",
+     "#9C6B4E",
+     "#9498A0"
+    ]
+   },
+   "primer": {
+    "colors": [
+     "#006EDB",
+     "#EB670F",
+     "#DF0C24",
+     "#179B9B",
+     "#30A147",
+     "#894CEB",
+     "#B88700",
+     "#CE2C85",
+     "#856D4C",
+     "#527A29",
+     "#D43511",
+     "#167E53",
+     "#9D615C",
+     "#64762D",
+     "#A830E8",
+     "#866E04",
+     "#808FA3"
+    ]
+   },
+   "rickandmorty": {
+    "colors": [
+     "#FAFD7C",
+     "#82491E",
+     "#24325F",
+     "#B7E4F9",
+     "#FB6467",
+     "#526E2D",
+     "#E762D7",
+     "#E89242",
+     "#FAE48B",
+     "#A6EEE6",
+     "#917C5D",
+     "#69C8EC"
+    ]
+   },
+   "simpsons": {
+    "colors": [
+     "#FED439",
+     "#709AE1",
+     "#8A9197",
+     "#D2AF81",
+     "#FD7446",
+     "#D5E4A2",
+     "#197EC0",
+     "#F05C3B",
+     "#46732E",
+     "#71D0F5",
+     "#370335",
+     "#075149",
+     "#C80813",
+     "#91331F",
+     "#1A9993",
+     "#FD8CC1"
+    ]
+   },
+   "startrek": {
+    "colors": [
+     "#CC0C00",
+     "#5C88DA",
+     "#84BD00",
+     "#FFCD00",
+     "#7C878E",
+     "#00B5E2",
+     "#00AF66"
+    ]
+   },
+   "tron": {
+    "colors": [
+     "#FF410D",
+     "#6EE2FF",
+     "#F7C530",
+     "#95CC5E",
+     "#D0DFE6",
+     "#F79D1E",
+     "#748AA6"
+    ]
+   },
+   "tw3": {
+    "colors": [
+     "#FFF1F2",
+     "#FFE4E6",
+     "#FECDD3",
+     "#FDA4AF",
+     "#FB7185",
+     "#F43F5E",
+     "#E11D48",
+     "#BE123C",
+     "#9F1239",
+     "#881337",
+     "#4C0519"
+    ]
+   },
+   "uchicago": {
+    "colors": [
+     "#800000",
+     "#767676",
+     "#CC8214",
+     "#616530",
+     "#0F425C",
+     "#9A5324",
+     "#642822",
+     "#3E3E23",
+     "#350E20"
+    ]
+   },
+   "ucscgb": {
+    "colors": [
+     "#FF0000",
+     "#FF9900",
+     "#FFCC00",
+     "#00FF00",
+     "#6699FF",
+     "#CC33FF",
+     "#99991E",
+     "#999999",
+     "#FF00CC",
+     "#CC0000",
+     "#FFCCCC",
+     "#FFFF00",
+     "#CCFF00",
+     "#358000",
+     "#0000CC",
+     "#99CCFF",
+     "#00FFFF",
+     "#CCFFFF",
+     "#9900CC",
+     "#CC99FF",
+     "#996600",
+     "#666600",
+     "#666666",
+     "#CCCCCC",
+     "#79CC3D",
+     "#CCCC99"
+    ]
+   }
+  }
+ },
+ "aliases": {
+  "crBegin": "colormap_low_color",
+  "ShapeType": "track_geom_shape",
+  "StyleUpDown": "link_direction",
+  "lineType": "link_linestyle",
+  "ChrLenUnitRatio": "chr_scale_ratio",
+  "Main": "title",
+  "LogP": "log_p",
+  "LimitYMax": "cap_max_value",
+  "LimitYMin": "cap_min_value",
+  "YMin": "Ymin",
+  "YMax": "Ymax",
+  "ValueSpacingRatio": "padding_ratio",
+  "ChrWidth": "track_height",
+  "LevelName": "label",
+  "ColorsConf": "colormap_conf",
+  "Chromosomes_order": "chr_order",
+  "ZoomRegion": "chr_zoom_region",
+  "ColorBrewer": "colormap_brewer_name",
+  "Gradien": "colormap_nlevels",
+  "ChrArrayDirection": "chr_orientation",
+  "PType": "plot_type",
+  "ShowColumn": "show_columns",
+  "ValueX": "track_num",
+  "CanvasHeightRitao": "canvas_height_ratio",
+  "CanvasWidthRitao": "canvas_width_ratio",
+  "RotatePng": "canvas_angle",
+  "body": "canvas_body",
+  "down": "canvas_margin_bottom",
+  "left": "canvas_margin_left",
+  "right": "canvas_margin_right",
+  "up": "canvas_margin_top",
+  "ChrSpacingRatio": "chr_spacing_ratio",
+  "RotateChrName": "chr_label_rotation",
+  "ChrNameRatio": "chr_label_size_ratio",
+  "ShiftChrNameX": "chr_label_shift_x",
+  "ShiftChrNameY": "chr_label_shift_y",
+  "ReverseChr": "chr_order_reverse",
+  "LabelUnit": "axis_tick_unit",
+  "RotateAxisText": "axis_text_angle",
+  "ScaleNum": "axis_tick_num",
+  "ScaleUnit": "axis_tick_interval",
+  "ShiftXaxisY": "xaxis_shift_y",
+  "Precision": "axis_tick_precision",
+  "ShowYaxis": "yaxis_tick_show",
+  "MainCol": "title_color",
+  "MainRatioFontSize": "title_size",
+  "ShiftMainX": "title_shift_x",
+  "ShiftMainY": "title_shift_y",
+  "asFlag": "as_flag",
+  "TopVHigh": "upper_outlier_ratio",
+  "TopVLow": "lower_outlier_ratio",
+  "crBG": "background_color",
+  "NoShowBackGroup": "background_show",
+  "BGChrEndCurve": "bg_end_arc",
+  "EndCurveOUT": "bg_end_offset",
+  "EndCurveRadian": "bg_end_arc_division",
+  "BGWidthRatio": "track_bg_height_ratio",
+  "NameCol": "label_color",
+  "NameRatioFontSize": "label_size",
+  "NameRotate": "label_angle",
+  "ShiftNameX": "label_shift_x",
+  "ShiftNameY": "label_shift_y",
+  "ReverseColor": "colormap_reverse",
+  "crMid": "colormap_mid_color",
+  "crEnd": "colormap_high_color",
+  "NoShowGradien": "colormap_legend_show",
+  "ShiftGradienX": "colormap_legend_shift_x",
+  "ShiftGradienY": "colormap_legend_shift_y",
+  "ShapesizeRatio": "track_geom_shape_size",
+  "TextFontRatio": "track_text_size",
+  "CirsizeRatio": "track_point_size",
+  "Rotate": "track_text_angle",
+  "TextAnchor": "track_text_anchor",
+  "LinesColBB": "line_colors_conf",
+  "SameHigh": "link_uniform_height",
+  "CorCutline": "cutoff_color",
+  "CorCutline1": "cutoff1_color",
+  "CorCutline2": "cutoff2_color",
+  "Cutline": "cutoff_y",
+  "Cutline1": "cutoff1_y",
+  "Cutline2": "cutoff2_y",
+  "crStrokeBG": "bg_stroke_color",
+  "strokeWidthBG": "bg_stroke_width",
+  "FileN": "FileX",
+  "colormap_legend_size": "colormap_legend_sizeratio",
+  "strokewidth": "stroke-width",
+  "zoom_region": "chr_zoom_region",
+  "ShowXaxis": "xaxis_tick_show",
+  "SizeGradienRatio": "colormap_legend_sizeratio",
+  "cutoff_value": "cutoff_y",
+  "cutoff1_value": "cutoff1_y",
+  "cutoff2_value": "cutoff2_y"
+ },
+ "params": [
+  {
+   "name": "colormap_low_color",
+   "scope": [
+    "track"
+   ],
+   "category": "color_legend",
+   "old_names": [
+    "crBegin"
+   ],
+   "importance": 0,
+   "type": "color",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "#006400",
+   "desc_zh": "三色渐变,最低间值对应的颜色",
+   "desc_en": "Color for the lowest value",
+   "label_zh": "三色渐变开始颜色",
+   "label_en": "Gradient low color",
+   "plot_types": []
+  },
+  {
+   "name": "track_geom_shape",
+   "scope": [
+    "track"
+   ],
+   "category": "geometry",
+   "old_names": [
+    "ShapeType"
+   ],
+   "importance": 2,
+   "type": "int",
+   "choices": null,
+   "min": 0,
+   "max": 13,
+   "default": null,
+   "desc_zh": "shape绘图中所使用形状的类型，如圆形、方形等",
+   "desc_en": "Shape type for shape plots (0-13)",
+   "label_zh": "画形状的类型选择",
+   "label_en": "Shape type",
+   "plot_types": [
+    "shape"
+   ]
+  },
+  {
+   "name": "link_direction",
+   "scope": [
+    "track"
+   ],
+   "category": "geometry",
+   "old_names": [
+    "StyleUpDown"
+   ],
+   "importance": 2,
+   "type": "enum",
+   "choices": [
+    "UpDown",
+    "DownUp",
+    "UpUp",
+    "DownDown",
+    "UpDownV2",
+    "DownUpV2"
+   ],
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "Link绘图中线条起点和终点的方向",
+   "desc_en": "Direction of link start/end (UpDown, DownUp, ...)",
+   "label_zh": "link的方向选择",
+   "label_en": "Link direction",
+   "plot_types": [
+    "PairWiseLink",
+    "PairWiseLinkV2",
+    "LinkS",
+    "link"
+   ]
+  },
+  {
+   "name": "link_linestyle",
+   "scope": [
+    "track"
+   ],
+   "category": "geometry",
+   "old_names": [
+    "lineType"
+   ],
+   "importance": 2,
+   "type": "text",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "用直线还是贝塞尔曲线",
+   "desc_en": "Straight line or bezier curve",
+   "label_zh": "画线的类型",
+   "label_en": "Link line style",
+   "plot_types": [
+    "PairWiseLink",
+    "PairWiseLinkV2",
+    "LinkS",
+    "link"
+   ]
+  },
+  {
+   "name": "chr_scale_ratio",
+   "scope": [
+    "track"
+   ],
+   "category": "chr",
+   "old_names": [
+    "ChrLenUnitRatio"
+   ],
+   "importance": 3,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "控制染色体长度相对于某个基准长度的比例值",
+   "desc_en": "Scale chromosome lengths by this ratio",
+   "label_zh": "将chr长度按ratio缩放",
+   "label_en": "Chr scale ratio",
+   "plot_types": []
+  },
+  {
+   "name": "title",
+   "scope": [
+    "global"
+   ],
+   "category": "title",
+   "old_names": [
+    "Main"
+   ],
+   "importance": 3,
+   "type": "text",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "定义绘图主题的文字内容标题",
+   "desc_en": "Main figure title",
+   "label_zh": "画图main本文内容",
+   "label_en": "Title text",
+   "plot_types": []
+  },
+  {
+   "name": "log_p",
+   "scope": [
+    "track"
+   ],
+   "category": "data",
+   "old_names": [
+    "LogP"
+   ],
+   "importance": 3,
+   "type": "bool",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "0",
+   "desc_zh": "是否对数值进行log10转换（0=否，1=是）",
+   "desc_en": "Apply -log10 transformation to values",
+   "label_zh": "对该列的数值进行-log10处理",
+   "label_en": "-log10 value",
+   "plot_types": [
+    "point",
+    "line",
+    "hist",
+    "ridgeline"
+   ]
+  },
+  {
+   "name": "cap_max_value",
+   "scope": [
+    "track"
+   ],
+   "category": "data",
+   "old_names": [
+    "LimitYMax"
+   ],
+   "importance": 3,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "限制最大值上限，裁断,用于限制数据的显示范围",
+   "desc_en": "Truncate values above this maximum",
+   "label_zh": "设该层Y轴的最大截断值",
+   "label_en": "Cap max value",
+   "plot_types": []
+  },
+  {
+   "name": "cap_min_value",
+   "scope": [
+    "track"
+   ],
+   "category": "data",
+   "old_names": [
+    "LimitYMin"
+   ],
+   "importance": 3,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "限制最小值下限，裁断,用于限制数据的显示范围",
+   "desc_en": "Truncate values below this minimum",
+   "label_zh": "设该层Y轴的最小截断值",
+   "label_en": "Cap min value",
+   "plot_types": []
+  },
+  {
+   "name": "Ymin",
+   "scope": [
+    "track"
+   ],
+   "category": "data",
+   "old_names": [
+    "YMin"
+   ],
+   "importance": 3,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "手动设置当前绘图数据中的显示的最小值，显示范围",
+   "desc_en": "Manual minimum of the display range",
+   "label_zh": "设该层Y的最小值",
+   "label_en": "Y min",
+   "plot_types": []
+  },
+  {
+   "name": "Ymax",
+   "scope": [
+    "track"
+   ],
+   "category": "data",
+   "old_names": [
+    "YMax"
+   ],
+   "importance": 3,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "手动设置当前绘图数据中的显示的最大值，显示范围",
+   "desc_en": "Manual maximum of the display range",
+   "label_zh": "设该层Y的最大值",
+   "label_en": "Y max",
+   "plot_types": []
+  },
+  {
+   "name": "padding_ratio",
+   "scope": [
+    "track"
+   ],
+   "category": "track",
+   "old_names": [
+    "ValueSpacingRatio"
+   ],
+   "importance": 3,
+   "type": "float",
+   "choices": null,
+   "min": 0,
+   "max": 1,
+   "default": "0",
+   "desc_zh": "同一染色体内相邻track的垂直间距比例（track_height*padding_ratio）",
+   "desc_en": "Vertical spacing ratio between adjacent tracks",
+   "label_zh": "两个染色体之间的空白比例",
+   "label_en": "Track padding ratio",
+   "plot_types": []
+  },
+  {
+   "name": "track_height",
+   "scope": [
+    "track"
+   ],
+   "category": "track",
+   "old_names": [
+    "ChrWidth"
+   ],
+   "importance": 3,
+   "type": "int",
+   "choices": null,
+   "min": 5,
+   "max": null,
+   "default": "20",
+   "desc_zh": "当前层(track)的高度（即轨道高度）",
+   "desc_en": "Height of this track",
+   "label_zh": "这一层chr的宽度",
+   "label_en": "Track height",
+   "plot_types": []
+  },
+  {
+   "name": "label",
+   "scope": [
+    "track"
+   ],
+   "category": "label",
+   "old_names": [
+    "LevelName"
+   ],
+   "importance": 3,
+   "type": "text",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "当前层track的标签ID名字",
+   "desc_en": "Label text of this track",
+   "label_zh": "该层的名称文本",
+   "label_en": "Track label",
+   "plot_types": []
+  },
+  {
+   "name": "colormap_conf",
+   "scope": [
+    "global"
+   ],
+   "category": "color_legend",
+   "old_names": [
+    "ColorsConf"
+   ],
+   "importance": 3,
+   "type": "file",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "自定义颜色映射文件路径，用于指定 value 到 color 的映射(格式 P1 = \"#FE0808\"）",
+   "desc_en": "Custom value-to-color mapping file, e.g. P1=\"#FE0808\"",
+   "label_zh": "自定义颜色文件（全局）",
+   "label_en": "Colormap file",
+   "plot_types": []
+  },
+  {
+   "name": "chr_order",
+   "scope": [
+    "global"
+   ],
+   "category": "chr",
+   "old_names": [
+    "Chromosomes_order"
+   ],
+   "importance": 4,
+   "type": "text",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "指定染色体顺序或筛选显示的染色体列表(未指定则按名称自动排序）",
+   "desc_en": "Chromosome order / filter list, e.g. chr1,chr2",
+   "label_zh": "染色体排序顺序",
+   "label_en": "Chr order",
+   "plot_types": []
+  },
+  {
+   "name": "chr_zoom_region",
+   "scope": [
+    "global"
+   ],
+   "category": "chr",
+   "old_names": [
+    "ZoomRegion"
+   ],
+   "importance": 4,
+   "type": "file",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "缩放特定区域查看细节，格式为chr:start:end（例如chr2:1000:5000）",
+   "desc_en": "Zoom into a region, format chr2:1000:5000",
+   "label_zh": "缩放某一区域",
+   "label_en": "Zoom region",
+   "plot_types": []
+  },
+  {
+   "name": "colormap_brewer_name",
+   "scope": [
+    "track"
+   ],
+   "category": "color_legend",
+   "old_names": [
+    "ColorBrewer"
+   ],
+   "importance": 4,
+   "type": "text",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "使用预设调色板,同Rcolorbrewer ，例如GnYlRd（数值）或Paired（文本）",
+   "desc_en": "Preset palette name, e.g. GnYlRd (numeric) or Paired (categorical)",
+   "label_zh": "ColorBrewer",
+   "label_en": "Brewer palette",
+   "plot_types": []
+  },
+  {
+   "name": "colormap_nlevels",
+   "scope": [
+    "track"
+   ],
+   "category": "color_legend",
+   "old_names": [
+    "Gradien"
+   ],
+   "importance": 4,
+   "type": "int",
+   "choices": null,
+   "min": 3,
+   "max": 255,
+   "default": "8",
+   "desc_zh": "颜色渐变等级数量",
+   "desc_en": "Number of color gradient levels",
+   "label_zh": "渐变图例",
+   "label_en": "Color levels",
+   "plot_types": [],
+   "default_hint_zh": "默认继承 trackALL（默认 8）；使用 brewer 色板时取该色板色数，范围 [3,255]",
+   "default_hint_en": "Inherits trackALL (8); with a brewer palette, its color count; clamped [3,255]"
+  },
+  {
+   "name": "chr_orientation",
+   "scope": [
+    "global"
+   ],
+   "category": "chr",
+   "old_names": [
+    "ChrArrayDirection"
+   ],
+   "importance": 5,
+   "type": "enum",
+   "choices": [
+    "vertical",
+    "horizontal"
+   ],
+   "min": null,
+   "max": null,
+   "default": "vertical",
+   "desc_zh": "染色体排列方向，可选值为horizontal（横向）或vertical（纵向）",
+   "desc_en": "vertical or horizontal chromosome layout",
+   "label_zh": "染色体排序方向",
+   "label_en": "Chr orientation",
+   "plot_types": []
+  },
+  {
+   "name": "plot_type",
+   "scope": [
+    "track"
+   ],
+   "category": "geometry",
+   "old_names": [
+    "PType"
+   ],
+   "importance": 5,
+   "type": "enum",
+   "choices": [
+    "heatmap",
+    "highlights",
+    "point",
+    "line",
+    "hist",
+    "text",
+    "shape",
+    "ridgeline",
+    "PairWiseLink",
+    "PairWiseLinkV2",
+    "LinkS",
+    "heatmapAnimated",
+    "histAnimated",
+    "highlightsAnimated",
+    "link"
+   ],
+   "min": null,
+   "max": null,
+   "default": "heatmap",
+   "desc_zh": "绘图类型，共13种：如热图(heatmap,highlights)等",
+   "desc_en": "Drawing style of this track",
+   "label_zh": "画图的类型，如点还是线等",
+   "label_en": "Plot type",
+   "plot_types": [],
+   "default_hint_zh": "默认继承 trackALL（trackALL 未设时为 heatmap）",
+   "default_hint_en": "Inherits trackALL (heatmap when unset)"
+  },
+  {
+   "name": "show_columns",
+   "scope": [
+    "track"
+   ],
+   "category": "data",
+   "old_names": [
+    "ShowColumn"
+   ],
+   "importance": 5,
+   "type": "text",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "确定绘图中需要显示的列，所在文件所在列",
+   "desc_en": "Columns to plot, e.g. File1:4 or File2:4,5",
+   "label_zh": "该层显示哪一文哪一列数据",
+   "label_en": "Show columns",
+   "plot_types": [],
+   "default_hint_zh": "默认 = File{track编号}:4（该文件存在且有数据时），否则用 File1 第(track编号+3)列",
+   "default_hint_en": "Default = File{track#}:4 if that file has data, else File1 column (track#+3)"
+  },
+  {
+   "name": "track_num",
+   "scope": [
+    "global"
+   ],
+   "category": "track",
+   "old_names": [
+    "ValueX"
+   ],
+   "importance": 5,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "指定绘图层数（track数量），默认根据File1中的列数自动推断",
+   "desc_en": "Number of tracks (layers); auto-inferred from File1 columns by default",
+   "label_zh": "多少层，类同circos多少个圈",
+   "label_en": "Track count",
+   "plot_types": [],
+   "default_hint_zh": "默认 = File1 的数值列数（总列数-2）；存在 trackN 配置段时以段数为准",
+   "default_hint_en": "Default = number of value columns in File1 (cols-2); explicit trackN sections win"
+  },
+  {
+   "name": "canvas_height_ratio",
+   "scope": [
+    "global"
+   ],
+   "category": "canvas",
+   "old_names": [
+    "CanvasHeightRitao"
+   ],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "收缩放画布的整体高度",
+   "desc_en": "Overall canvas height ratio",
+   "label_zh": "画布高度变化比例",
+   "label_en": "Canvas height ratio",
+   "plot_types": []
+  },
+  {
+   "name": "canvas_width_ratio",
+   "scope": [
+    "global"
+   ],
+   "category": "canvas",
+   "old_names": [
+    "CanvasWidthRitao"
+   ],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "收缩放画布的整体宽度",
+   "desc_en": "Overall canvas width ratio",
+   "label_zh": "画布宽度变化比例",
+   "label_en": "Canvas width ratio",
+   "plot_types": []
+  },
+  {
+   "name": "canvas_angle",
+   "scope": [
+    "global"
+   ],
+   "category": "canvas",
+   "old_names": [
+    "RotatePng"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "0",
+   "desc_zh": "整个PNG图形旋转角度,单位为度",
+   "desc_en": "Rotation angle of the exported PNG (degrees)",
+   "label_zh": "画布png旋转角度",
+   "label_en": "Canvas angle",
+   "plot_types": []
+  },
+  {
+   "name": "canvas_body",
+   "scope": [
+    "global"
+   ],
+   "category": "canvas",
+   "old_names": [
+    "body"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "1200",
+   "desc_zh": "主画布大小，默认值为1200",
+   "desc_en": "Main canvas size (default 1200)",
+   "label_zh": "画布中间body",
+   "label_en": "Canvas body",
+   "plot_types": []
+  },
+  {
+   "name": "canvas_margin_bottom",
+   "scope": [
+    "global"
+   ],
+   "category": "canvas",
+   "old_names": [
+    "down"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "30",
+   "desc_zh": "画布下边距，默认为25",
+   "desc_en": "Bottom margin of the canvas (default 30)",
+   "label_zh": "画布body下面空白大小",
+   "label_en": "Canvas margin bottom",
+   "plot_types": []
+  },
+  {
+   "name": "canvas_margin_left",
+   "scope": [
+    "global"
+   ],
+   "category": "canvas",
+   "old_names": [
+    "left"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "100",
+   "desc_zh": "画布左边距，默认为100",
+   "desc_en": "Left margin of the canvas (default 100)",
+   "label_zh": "画布body左边空白大小",
+   "label_en": "Canvas margin left",
+   "plot_types": []
+  },
+  {
+   "name": "canvas_margin_right",
+   "scope": [
+    "global"
+   ],
+   "category": "canvas",
+   "old_names": [
+    "right"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "80",
+   "desc_zh": "画布右边距，默认为120",
+   "desc_en": "Right margin of the canvas (default 80)",
+   "label_zh": "画布body右边空白大小",
+   "label_en": "Canvas margin right",
+   "plot_types": []
+  },
+  {
+   "name": "canvas_margin_top",
+   "scope": [
+    "global"
+   ],
+   "category": "canvas",
+   "old_names": [
+    "up"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "55",
+   "desc_zh": "画布上边距，默认为55",
+   "desc_en": "Top margin of the canvas (default 55)",
+   "label_zh": "画布body上边空白大小",
+   "label_en": "Canvas margin top",
+   "plot_types": []
+  },
+  {
+   "name": "chr_spacing_ratio",
+   "scope": [
+    "global"
+   ],
+   "category": "chr",
+   "old_names": [
+    "ChrSpacingRatio"
+   ],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "0.2",
+   "desc_zh": "不同染色体之间的间隔比例（基于Sum(track_height)计算）",
+   "desc_en": "Spacing ratio between chromosomes",
+   "label_zh": "染色体之间空白比例",
+   "label_en": "Chr spacing ratio",
+   "plot_types": []
+  },
+  {
+   "name": "chr_label_rotation",
+   "scope": [
+    "global"
+   ],
+   "category": "chr",
+   "old_names": [
+    "RotateChrName"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "0",
+   "desc_zh": "染色体标签文字旋转角度",
+   "desc_en": "Rotation angle of chromosome labels",
+   "label_zh": "染色体名字旋转角度",
+   "label_en": "Chr label rotation",
+   "plot_types": []
+  },
+  {
+   "name": "chr_label_size_ratio",
+   "scope": [
+    "global",
+    "track"
+   ],
+   "category": "chr",
+   "old_names": [
+    "ChrNameRatio"
+   ],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "0.3",
+   "desc_zh": "染色体标签字体大小比例(相对于默认值)",
+   "desc_en": "Font size ratio of chromosome labels",
+   "label_zh": "染色体名字大小缩放",
+   "label_en": "Chr label size ratio",
+   "plot_types": []
+  },
+  {
+   "name": "chr_label_shift_x",
+   "scope": [
+    "track"
+   ],
+   "category": "chr",
+   "old_names": [
+    "ShiftChrNameX"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "0",
+   "desc_zh": "染色体标签的横向偏移量",
+   "desc_en": "Horizontal shift of chromosome labels",
+   "label_zh": "chr名字x方向移动",
+   "label_en": "Chr label shift X",
+   "plot_types": []
+  },
+  {
+   "name": "chr_label_shift_y",
+   "scope": [
+    "track"
+   ],
+   "category": "chr",
+   "old_names": [
+    "ShiftChrNameY"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "0",
+   "desc_zh": "染色体标签的纵向偏移量",
+   "desc_en": "Vertical shift of chromosome labels",
+   "label_zh": "chr名字y方向移动",
+   "label_en": "Chr label shift Y",
+   "plot_types": []
+  },
+  {
+   "name": "chr_order_reverse",
+   "scope": [
+    "track"
+   ],
+   "category": "chr",
+   "old_names": [
+    "ReverseChr"
+   ],
+   "importance": 0,
+   "type": "bool",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "反转染色体显示顺序；设置即生效，留空=不反转（注：当前引擎按逗号分隔的染色体名解析，写 1 只影响名为 1 的染色体）",
+   "desc_en": "Reverse the chromosome display order; setting it takes effect, empty = off (note: the engine currently parses the value as a comma-separated chromosome list, so writing 1 only affects a chromosome literally named 1)",
+   "label_zh": "反转染色体顺序",
+   "label_en": "Reverse chromosome order",
+   "plot_types": [],
+   "presence_only": true
+  },
+  {
+   "name": "axis_tick_unit",
+   "scope": [
+    "global"
+   ],
+   "category": "axis",
+   "old_names": [
+    "LabelUnit"
+   ],
+   "importance": 0,
+   "type": "text",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "设定坐标轴上刻度的单位，不设自动判bp/Kb/Mb",
+   "desc_en": "Unit of the coordinate axis ticks (bp/Kb/Mb/...)",
+   "label_zh": "坐标刻度上的单位",
+   "label_en": "Axis tick unit",
+   "plot_types": []
+  },
+  {
+   "name": "axis_text_angle",
+   "scope": [
+    "global"
+   ],
+   "category": "axis",
+   "old_names": [
+    "RotateAxisText"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "调整坐标轴上文本的显示角度",
+   "desc_en": "Rotation angle of the axis tick text",
+   "label_zh": "坐标刻度上文本旋转角度",
+   "label_en": "Axis text angle",
+   "plot_types": []
+  },
+  {
+   "name": "xaxis_tick_show",
+   "scope": [
+    "global"
+   ],
+   "category": "axis",
+   "old_names": [],
+   "importance": 0,
+   "type": "bool",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "1",
+   "desc_zh": "是否显示X轴刻度标签",
+   "desc_en": "Show (1) or hide (0) X axis tick labels",
+   "label_zh": "x坐标显示",
+   "label_en": "Show X-axis ticks",
+   "plot_types": []
+  },
+  {
+   "name": "axis_tick_num",
+   "scope": [
+    "global"
+   ],
+   "category": "axis",
+   "old_names": [
+    "ScaleNum"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "10",
+   "desc_zh": "确定坐标轴上刻度的数量，默认最大10等份",
+   "desc_en": "Number of axis ticks (max 10 parts by default)",
+   "label_zh": "坐标刻度的数目",
+   "label_en": "Axis tick number",
+   "plot_types": []
+  },
+  {
+   "name": "axis_tick_interval",
+   "scope": [
+    "global"
+   ],
+   "category": "axis",
+   "old_names": [
+    "ScaleUnit"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "规定坐标轴上相邻刻度之间的数值间隔",
+   "desc_en": "Interval between axis ticks",
+   "label_zh": "坐标刻度每多少值一个刻度",
+   "label_en": "Axis tick interval",
+   "plot_types": []
+  },
+  {
+   "name": "xaxis_shift_y",
+   "scope": [
+    "global"
+   ],
+   "category": "axis",
+   "old_names": [
+    "ShiftXaxisY"
+   ],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "0",
+   "desc_zh": "调整X坐标轴在垂直方移动",
+   "desc_en": "Vertical shift of the X axis",
+   "label_zh": "坐标刻度X轴向Y移动距离",
+   "label_en": "X axis shift Y",
+   "plot_types": []
+  },
+  {
+   "name": "axis_tick_precision",
+   "scope": [
+    "track"
+   ],
+   "category": "axis",
+   "old_names": [
+    "Precision"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "控制色带/图例数值标签的小数位数；不影响坐标轴刻度（Y轴刻度请用 yaxis_tick_precision）",
+   "desc_en": "Decimal digits of the colorbar/legend value labels; does NOT affect axis ticks (use yaxis_tick_precision for the Y axis)",
+   "label_zh": "图例数值精度",
+   "label_en": "Legend value precision",
+   "plot_types": []
+  },
+  {
+   "name": "yaxis_tick_show",
+   "scope": [
+    "track"
+   ],
+   "category": "axis",
+   "old_names": [
+    "ShowYaxis"
+   ],
+   "importance": 0,
+   "type": "bool",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "0",
+   "desc_zh": "是否显示Y轴刻度标签",
+   "desc_en": "Show (1) or hide (0) Y axis tick labels",
+   "label_zh": "显示Y轴坐标值",
+   "label_en": "Show Y ticks",
+   "plot_types": [
+    "point",
+    "line",
+    "hist",
+    "ridgeline",
+    "shape"
+   ]
+  },
+  {
+   "name": "title_color",
+   "scope": [
+    "global"
+   ],
+   "category": "title",
+   "old_names": [
+    "MainCol"
+   ],
+   "importance": 0,
+   "type": "color",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "确定绘图主题文本的颜色",
+   "desc_en": "Color of the main title",
+   "label_zh": "画图main本文颜色",
+   "label_en": "Title color",
+   "plot_types": []
+  },
+  {
+   "name": "title_size",
+   "scope": [
+    "global"
+   ],
+   "category": "title",
+   "old_names": [
+    "MainRatioFontSize"
+   ],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "控制绘图主题元素的大小，比例收缩放",
+   "desc_en": "Font size ratio of the main title",
+   "label_zh": "画图main本文字体大小",
+   "label_en": "Title size ratio",
+   "plot_types": []
+  },
+  {
+   "name": "title_shift_x",
+   "scope": [
+    "global"
+   ],
+   "category": "title",
+   "old_names": [
+    "ShiftMainX"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "控制绘图主题元素在水平方向上的偏移位置",
+   "desc_en": "Horizontal offset of the title",
+   "label_zh": "画图main本文X移动距离",
+   "label_en": "Title shift X",
+   "plot_types": []
+  },
+  {
+   "name": "title_shift_y",
+   "scope": [
+    "global"
+   ],
+   "category": "title",
+   "old_names": [
+    "ShiftMainY"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "控制绘图主题元素在垂直方向上的偏移位置",
+   "desc_en": "Vertical offset of the title",
+   "label_zh": "画图main本文Y移动距离",
+   "label_en": "Title shift Y",
+   "plot_types": []
+  },
+  {
+   "name": "as_flag",
+   "scope": [
+    "track"
+   ],
+   "category": "data",
+   "old_names": [
+    "asFlag"
+   ],
+   "importance": 0,
+   "type": "bool",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "把该列数据当成文本（非数值）处理；设置即生效，留空=不生效",
+   "desc_en": "Treat this column as text rather than numbers; setting it (any value) takes effect, leaving it empty disables it",
+   "label_zh": "该列按文本/Flag处理",
+   "label_en": "Treat column as flags",
+   "plot_types": [
+    "point",
+    "shape",
+    "text",
+    "heatmap",
+    "highlights"
+   ],
+   "presence_only": true
+  },
+  {
+   "name": "upper_outlier_ratio",
+   "scope": [
+    "track"
+   ],
+   "category": "data",
+   "old_names": [
+    "TopVHigh"
+   ],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "0.95",
+   "desc_zh": "定义顶部异常值阈值，高于此比例的值使用最高色",
+   "desc_en": "Values above this quantile use the max color",
+   "label_zh": "图例最Top0.95当High值>xx",
+   "label_en": "Upper outlier ratio",
+   "plot_types": [],
+   "default_hint_zh": "默认 0.95；当 plot_type 非 heatmap/highlights 且 trackALL 未修改时为 1.01",
+   "default_hint_en": "0.95 by default; 1.01 when plot_type is not heatmap/highlights (trackALL unchanged)"
+  },
+  {
+   "name": "lower_outlier_ratio",
+   "scope": [
+    "track"
+   ],
+   "category": "data",
+   "old_names": [
+    "TopVLow"
+   ],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "0",
+   "desc_zh": "定义底部异常值阈值，低于此比例的值使用最低色",
+   "desc_en": "Values below this quantile use the min color",
+   "label_zh": "图例最最低离线值",
+   "label_en": "Lower outlier ratio",
+   "plot_types": []
+  },
+  {
+   "name": "background_color",
+   "scope": [
+    "track"
+   ],
+   "category": "track",
+   "old_names": [
+    "crBG"
+   ],
+   "importance": 0,
+   "type": "color",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "#B8B8B8",
+   "desc_zh": "背景颜色",
+   "desc_en": "Background color of this track",
+   "label_zh": "背景颜色",
+   "label_en": "Background color",
+   "plot_types": []
+  },
+  {
+   "name": "background_show",
+   "scope": [
+    "track"
+   ],
+   "category": "track",
+   "old_names": [
+    "NoShowBackGroup"
+   ],
+   "importance": 0,
+   "type": "bool",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "是否绘制该层背景：1=显示（默认），0=不绘制背景；LinkS 建议设为0",
+   "desc_en": "Draw this track's background: 1 = shown (default), 0 = hidden; the engine suggests 0 for LinkS",
+   "label_zh": "显示背景颜色",
+   "label_en": "Show background",
+   "plot_types": []
+  },
+  {
+   "name": "bg_end_arc",
+   "scope": [
+    "track"
+   ],
+   "category": "track",
+   "old_names": [
+    "BGChrEndCurve"
+   ],
+   "importance": 0,
+   "type": "bool",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "1",
+   "desc_zh": "较少使用的参数，用于控制背景弧线等特殊效果",
+   "desc_en": "Draw arcs at chromosome ends of the background",
+   "label_zh": "该层边缘多少等分边缘的后画弧度",
+   "label_en": "Bg end arc",
+   "plot_types": []
+  },
+  {
+   "name": "bg_end_offset",
+   "scope": [
+    "track"
+   ],
+   "category": "track",
+   "old_names": [
+    "EndCurveOUT"
+   ],
+   "importance": 0,
+   "type": "bool",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "染色体末端曲线从X轴0开始向外扩展；设置即生效，留空=不扩展",
+   "desc_en": "Extend the chromosome end curves outward; setting it takes effect, empty = off",
+   "label_zh": "末端曲线向外扩展",
+   "label_en": "Extend end curves",
+   "plot_types": [],
+   "presence_only": true
+  },
+  {
+   "name": "bg_end_arc_division",
+   "scope": [
+    "track"
+   ],
+   "category": "track",
+   "old_names": [
+    "EndCurveRadian"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "设定染色体末端曲线的弧度大小，越大曲度越小",
+   "desc_en": "Division of the end curve arc",
+   "label_zh": "该层边缘曲线的曲度",
+   "label_en": "Bg end arc division",
+   "plot_types": []
+  },
+  {
+   "name": "track_bg_height_ratio",
+   "scope": [
+    "track"
+   ],
+   "category": "track",
+   "old_names": [
+    "BGWidthRatio"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "1",
+   "desc_zh": "背景高度占track_height的比例",
+   "desc_en": "Background height as a proportion of track height",
+   "label_zh": "此层chr的背景与和Chr宽度的比例",
+   "label_en": "Track bg height ratio",
+   "plot_types": []
+  },
+  {
+   "name": "label_color",
+   "scope": [
+    "track"
+   ],
+   "category": "label",
+   "old_names": [
+    "NameCol"
+   ],
+   "importance": 0,
+   "type": "color",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "tracklabel名称文本的颜色",
+   "desc_en": "Color of the track label",
+   "label_zh": "该层的名称文本的颜色",
+   "label_en": "Label color",
+   "plot_types": []
+  },
+  {
+   "name": "label_size",
+   "scope": [
+    "track"
+   ],
+   "category": "label",
+   "old_names": [
+    "NameRatioFontSize"
+   ],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": 0,
+   "max": null,
+   "default": "1.0",
+   "desc_zh": "轨道名称文本的字号缩放比例（默认1.0）",
+   "desc_en": "Font-size scale ratio of the track label (default 1.0)",
+   "label_zh": "该层的名称文本的字体大小缩放比例",
+   "label_en": "Label size",
+   "plot_types": []
+  },
+  {
+   "name": "label_angle",
+   "scope": [
+    "track"
+   ],
+   "category": "label",
+   "old_names": [
+    "NameRotate"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "tracklabel名称文本的显示角度",
+   "desc_en": "Rotation angle of the track label",
+   "label_zh": "该层的名称文本的旋转",
+   "label_en": "Label angle",
+   "plot_types": []
+  },
+  {
+   "name": "label_shift_x",
+   "scope": [
+    "track"
+   ],
+   "category": "label",
+   "old_names": [
+    "ShiftNameX"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "tracklabel名称文本在水平方向上的位置",
+   "desc_en": "Horizontal shift of the track label",
+   "label_zh": "图层名字x方向移动",
+   "label_en": "Label shift X",
+   "plot_types": []
+  },
+  {
+   "name": "label_shift_y",
+   "scope": [
+    "track"
+   ],
+   "category": "label",
+   "old_names": [
+    "ShiftNameY"
+   ],
+   "importance": 0,
+   "type": "int",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "tracklabel名称文本在水平方向上的位置",
+   "desc_en": "Vertical shift of the track label",
+   "label_zh": "图层名字y方向移动",
+   "label_en": "Label shift Y",
+   "plot_types": []
+  },
+  {
+   "name": "colormap_reverse",
+   "scope": [
+    "track"
+   ],
+   "category": "color_legend",
+   "old_names": [
+    "ReverseColor"
+   ],
+   "importance": 0,
+   "type": "bool",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "反转该层渐变的颜色顺序；设置即生效（写 0 也会生效），留空=不反转",
+   "desc_en": "Reverse this track's gradient colours; the engine acts on the key merely existing (writing 0 still reverses), empty = off",
+   "label_zh": "反转渐变颜色顺序",
+   "label_en": "Reverse gradient colors",
+   "plot_types": [],
+   "presence_only": true
+  },
+  {
+   "name": "colormap_mid_color",
+   "scope": [
+    "track"
+   ],
+   "category": "color_legend",
+   "old_names": [
+    "crMid"
+   ],
+   "importance": 0,
+   "type": "color",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "#FFFF00",
+   "desc_zh": "三色渐变,中间值对应的颜色",
+   "desc_en": "Color for the middle value",
+   "label_zh": "三色渐变中间颜色",
+   "label_en": "Gradient mid color",
+   "plot_types": []
+  },
+  {
+   "name": "colormap_high_color",
+   "scope": [
+    "track"
+   ],
+   "category": "color_legend",
+   "old_names": [
+    "crEnd"
+   ],
+   "importance": 0,
+   "type": "color",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "#FF0000",
+   "desc_zh": "三色渐变,最高值对应的颜色",
+   "desc_en": "Color for the highest value",
+   "label_zh": "三色渐变终止颜色",
+   "label_en": "Gradient high color",
+   "plot_types": []
+  },
+  {
+   "name": "colormap_legend_show",
+   "scope": [
+    "track"
+   ],
+   "category": "color_legend",
+   "old_names": [
+    "NoShowGradien"
+   ],
+   "importance": 0,
+   "type": "bool",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "1",
+   "desc_zh": "是否显示颜色渐变图例：1=显示（默认），0=隐藏；图例大小为0时也不显示",
+   "desc_en": "Show the gradient legend: 1 = shown (default), 0 = hidden; also hidden when the legend size ratio is 0",
+   "label_zh": "显示渐变图例",
+   "label_en": "Show gradient legend",
+   "plot_types": []
+  },
+  {
+   "name": "colormap_legend_shift_x",
+   "scope": [
+    "track"
+   ],
+   "category": "color_legend",
+   "old_names": [
+    "ShiftGradienX"
+   ],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "0",
+   "desc_zh": "控制图例渐变在水平方向上的位置",
+   "desc_en": "Horizontal shift of the gradient legend",
+   "label_zh": "渐变颜色(图例）X轴方向移动",
+   "label_en": "Legend shift X",
+   "plot_types": []
+  },
+  {
+   "name": "colormap_legend_shift_y",
+   "scope": [
+    "track"
+   ],
+   "category": "color_legend",
+   "old_names": [
+    "ShiftGradienY"
+   ],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "0",
+   "desc_zh": "控制图例渐变在垂直方向上的位置",
+   "desc_en": "Vertical shift of the gradient legend",
+   "label_zh": "渐变颜色(图例）Y方向移动",
+   "label_en": "Legend shift Y",
+   "plot_types": []
+  },
+  {
+   "name": "track_geom_shape_size",
+   "scope": [
+    "track"
+   ],
+   "category": "geometry",
+   "old_names": [
+    "ShapesizeRatio"
+   ],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "1.0",
+   "desc_zh": "shape绘图中形状的大小",
+   "desc_en": "Size ratio of shapes",
+   "label_zh": "画形状的大小比例",
+   "label_en": "Shape size ratio",
+   "plot_types": [
+    "shape"
+   ]
+  },
+  {
+   "name": "track_text_size",
+   "scope": [
+    "track"
+   ],
+   "category": "geometry",
+   "old_names": [
+    "TextFontRatio"
+   ],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "1.0",
+   "desc_zh": "text绘图中text字体大小比例",
+   "desc_en": "Font size ratio of texts",
+   "label_zh": "字体比例缩放",
+   "label_en": "Text size ratio",
+   "plot_types": [
+    "text"
+   ]
+  },
+  {
+   "name": "track_point_size",
+   "scope": [
+    "track"
+   ],
+   "category": "geometry",
+   "old_names": [
+    "CirsizeRatio"
+   ],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "1.0",
+   "desc_zh": "point绘图中使用点的大小比例",
+   "desc_en": "Size ratio of points",
+   "label_zh": "画图形点的大小缩放比例",
+   "label_en": "Point size ratio",
+   "plot_types": [
+    "point"
+   ]
+  },
+  {
+   "name": "track_text_angle",
+   "scope": [
+    "track"
+   ],
+   "category": "geometry",
+   "old_names": [
+    "Rotate"
+   ],
+   "importance": 0,
+   "type": "text",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "0",
+   "desc_zh": "text绘图中text显示角度",
+   "desc_en": "Rotation angle of texts",
+   "label_zh": "对文本层的文字旋转",
+   "label_en": "Text angle",
+   "plot_types": [
+    "text"
+   ]
+  },
+  {
+   "name": "track_text_anchor",
+   "scope": [
+    "track"
+   ],
+   "category": "geometry",
+   "old_names": [
+    "TextAnchor"
+   ],
+   "importance": 0,
+   "type": "enum",
+   "choices": [
+    "start",
+    "middle",
+    "end"
+   ],
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "text绘图中text对齐方式，如左对齐、居中对齐等",
+   "desc_en": "Text anchor (start/middle/end)",
+   "label_zh": "SVG的text-anchor字体居中",
+   "label_en": "Text anchor",
+   "plot_types": [
+    "text"
+   ]
+  },
+  {
+   "name": "line_colors_conf",
+   "scope": [
+    "track"
+   ],
+   "category": "geometry",
+   "old_names": [
+    "LinesColBB"
+   ],
+   "importance": 0,
+   "type": "file",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "对绘图中线条的颜色进手动配置",
+   "desc_en": "Custom line color configuration file",
+   "label_zh": "自定义画线条的颜色配置文件",
+   "label_en": "Line colors file",
+   "plot_types": [
+    "PairWiseLink",
+    "PairWiseLinkV2",
+    "LinkS",
+    "link"
+   ]
+  },
+  {
+   "name": "link_uniform_height",
+   "scope": [
+    "track"
+   ],
+   "category": "geometry",
+   "old_names": [
+    "SameHigh"
+   ],
+   "importance": 0,
+   "type": "bool",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "Link中是否统一高度",
+   "desc_en": "Give all links the same height",
+   "label_zh": "link的高度设一样高",
+   "label_en": "Link uniform height",
+   "plot_types": [
+    "PairWiseLink",
+    "PairWiseLinkV2",
+    "LinkS",
+    "link"
+   ]
+  },
+  {
+   "name": "cutoff_color",
+   "scope": [
+    "track"
+   ],
+   "category": "geometry",
+   "old_names": [
+    "CorCutline"
+   ],
+   "importance": 0,
+   "type": "color",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "确定绘图中分割线的颜色",
+   "desc_en": "Color of the cutoff line",
+   "label_zh": "cutoff线的颜色",
+   "label_en": "Cutoff line color",
+   "plot_types": [
+    "point",
+    "line",
+    "hist",
+    "ridgeline"
+   ]
+  },
+  {
+   "name": "cutoff1_color",
+   "scope": [
+    "track"
+   ],
+   "category": "geometry",
+   "old_names": [
+    "CorCutline1"
+   ],
+   "importance": 0,
+   "type": "color",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "为第一条分割线指定颜色",
+   "desc_en": "Color of the first cutoff line",
+   "label_zh": "cutoff1线的颜色",
+   "label_en": "Cutoff line 1 color",
+   "plot_types": [
+    "point",
+    "line",
+    "hist",
+    "ridgeline"
+   ]
+  },
+  {
+   "name": "cutoff2_color",
+   "scope": [
+    "track"
+   ],
+   "category": "geometry",
+   "old_names": [
+    "CorCutline2"
+   ],
+   "importance": 0,
+   "type": "color",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "为第二条分割线指定颜色",
+   "desc_en": "Color of the second cutoff line",
+   "label_zh": "cutoff2线的颜色",
+   "label_en": "Cutoff line 2 color",
+   "plot_types": [
+    "point",
+    "line",
+    "hist",
+    "ridgeline"
+   ]
+  },
+  {
+   "name": "cutoff_y",
+   "scope": [
+    "track"
+   ],
+   "category": "geometry",
+   "old_names": [
+    "Cutline"
+   ],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "确定分割线在Y轴上的位置",
+   "desc_en": "Y position of the cutoff line (docs name: cutoff_value)",
+   "label_zh": "cutoff线的高度，即Y轴画cutoff线",
+   "label_en": "Cutoff line Y",
+   "plot_types": [
+    "point",
+    "line",
+    "hist",
+    "ridgeline"
+   ]
+  },
+  {
+   "name": "cutoff1_y",
+   "scope": [
+    "track"
+   ],
+   "category": "geometry",
+   "old_names": [
+    "Cutline1"
+   ],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "确定第一条分割线在Y轴上的位置",
+   "desc_en": "Y position of the first cutoff line",
+   "label_zh": "cutoff线的高度1",
+   "label_en": "Cutoff line 1 Y",
+   "plot_types": [
+    "point",
+    "line",
+    "hist",
+    "ridgeline"
+   ]
+  },
+  {
+   "name": "cutoff2_y",
+   "scope": [
+    "track"
+   ],
+   "category": "geometry",
+   "old_names": [
+    "Cutline2"
+   ],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "确定第二条分割线在Y轴上的位置",
+   "desc_en": "Y position of the second cutoff line",
+   "label_zh": "cutoff线的高度2",
+   "label_en": "Cutoff line 2 Y",
+   "plot_types": [
+    "point",
+    "line",
+    "hist",
+    "ridgeline"
+   ]
+  },
+  {
+   "name": "stroke-width",
+   "scope": [
+    "global",
+    "track"
+   ],
+   "category": "svg",
+   "old_names": [],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": 0,
+   "max": null,
+   "default": "1",
+   "desc_zh": "控制绘图中线条的粗细程度",
+   "desc_en": "SVG stroke-width",
+   "label_zh": "SVG标准stroke-width属性",
+   "label_en": "Stroke width",
+   "plot_types": [],
+   "default_hint_zh": "默认 1",
+   "default_hint_en": "Default 1"
+  },
+  {
+   "name": "fill-opacity",
+   "scope": [
+    "track"
+   ],
+   "category": "svg",
+   "old_names": [],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": 0,
+   "max": 1,
+   "default": "1",
+   "desc_zh": "控制绘图中图形填充颜色的不透明度",
+   "desc_en": "SVG fill-opacity",
+   "label_zh": "SVG标准fill-opacity属性",
+   "label_en": "Fill opacity",
+   "plot_types": []
+  },
+  {
+   "name": "font-family",
+   "scope": [
+    "global",
+    "track"
+   ],
+   "category": "svg",
+   "old_names": [],
+   "importance": 0,
+   "type": "text",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "Arial",
+   "desc_zh": "确定绘图中文字所使用的字体",
+   "desc_en": "SVG font-family",
+   "label_zh": "SVG标准font-family属性",
+   "label_en": "Font family",
+   "plot_types": []
+  },
+  {
+   "name": "bg_stroke_color",
+   "scope": [
+    "track"
+   ],
+   "category": "svg",
+   "old_names": [
+    "crStrokeBG"
+   ],
+   "importance": 0,
+   "type": "color",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "背景描边的颜色",
+   "desc_en": "Stroke color of the background",
+   "label_zh": "stroke的背景颜色，同SVG:stroke",
+   "label_en": "Bg stroke color",
+   "plot_types": [],
+   "default_hint_zh": "默认 = 本层 background_color",
+   "default_hint_en": "Defaults to this track's background_color"
+  },
+  {
+   "name": "stroke-opacity",
+   "scope": [
+    "track"
+   ],
+   "category": "svg",
+   "old_names": [],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": 0,
+   "max": 1,
+   "default": "1",
+   "desc_zh": "调整绘图中线条描边的不透明度",
+   "desc_en": "SVG stroke-opacity",
+   "label_zh": "SVG标准stroke-opacity属性",
+   "label_en": "Stroke opacity",
+   "plot_types": [],
+   "default_hint_zh": "默认 = 本层 fill-opacity（均被钳制在 [0,1]）",
+   "default_hint_en": "Defaults to this track's fill-opacity (both clamped to [0,1])"
+  },
+  {
+   "name": "font-size",
+   "scope": [
+    "global"
+   ],
+   "category": "svg",
+   "old_names": [],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": 0,
+   "max": null,
+   "default": null,
+   "desc_zh": "设定绘图中文字的大小",
+   "desc_en": "SVG font-size",
+   "label_zh": "SVG标准font-size属性",
+   "label_en": "Font size",
+   "plot_types": []
+  },
+  {
+   "name": "fill",
+   "scope": [
+    "global"
+   ],
+   "category": "svg",
+   "old_names": [],
+   "importance": 0,
+   "type": "text",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "green",
+   "desc_zh": "用于指定绘图中图形的填充颜色",
+   "desc_en": "SVG fill color",
+   "label_zh": "SVG标准fill颜色",
+   "label_en": "Fill color",
+   "plot_types": []
+  },
+  {
+   "name": "text-font-size",
+   "scope": [
+    "track"
+   ],
+   "category": "svg",
+   "old_names": [],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": 0,
+   "max": null,
+   "default": null,
+   "desc_zh": "设定绘图中文本的字体大小",
+   "desc_en": "SVG text font size",
+   "label_zh": "SVG标准text-font-size属性",
+   "label_en": "Text font size",
+   "plot_types": []
+  },
+  {
+   "name": "bg_stroke_width",
+   "scope": [
+    "track"
+   ],
+   "category": "svg",
+   "old_names": [
+    "strokeWidthBG"
+   ],
+   "importance": 0,
+   "type": "text",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "0",
+   "desc_zh": "背景描边的粗细",
+   "desc_en": "Stroke width of the background",
+   "label_zh": "strokeWidthBG同SVG:stroke-width属性",
+   "label_en": "Bg stroke width",
+   "plot_types": []
+  },
+  {
+   "name": "track_shift_x",
+   "scope": [
+    "track"
+   ],
+   "category": "track",
+   "old_names": [],
+   "importance": 0,
+   "type": "text",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "0",
+   "desc_zh": "整层轨道沿X方向的平移量（默认0）",
+   "desc_en": "Horizontal shift of the whole track",
+   "label_zh": "轨道水平偏移",
+   "label_en": "Track shift X",
+   "plot_types": []
+  },
+  {
+   "name": "track_shift_y",
+   "scope": [
+    "track"
+   ],
+   "category": "track",
+   "old_names": [],
+   "importance": 0,
+   "type": "text",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "0",
+   "desc_zh": "整层轨道沿Y方向的平移量（默认0）",
+   "desc_en": "Vertical shift of the whole track",
+   "label_zh": "轨道垂直偏移",
+   "label_en": "Track shift Y",
+   "plot_types": []
+  },
+  {
+   "name": "xaxis_tick_direction",
+   "scope": [
+    "global"
+   ],
+   "category": "axis",
+   "old_names": [],
+   "importance": 1,
+   "type": "enum",
+   "choices": [
+    "Down",
+    "Up"
+   ],
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "X轴刻度线朝向：Down（默认）或 Up",
+   "desc_en": "X axis tick direction: Down (default) or Up",
+   "label_zh": "X刻度方向",
+   "label_en": "X tick direction",
+   "plot_types": []
+  },
+  {
+   "name": "yaxis_tick_num",
+   "scope": [
+    "track"
+   ],
+   "category": "axis",
+   "old_names": [],
+   "importance": 1,
+   "type": "int",
+   "choices": null,
+   "min": 2,
+   "max": null,
+   "default": "5",
+   "desc_zh": "每层Y轴的刻度条数；默认5，轨道高度小于20时取2，小于90时按高度自动",
+   "desc_en": "Number of Y axis ticks per track; default 5 (2 when the track is <20px tall, auto from height below 90px)",
+   "label_zh": "Y轴刻度数目",
+   "label_en": "Y tick number",
+   "plot_types": [
+    "point",
+    "line",
+    "hist",
+    "ridgeline",
+    "shape"
+   ]
+  },
+  {
+   "name": "yaxis_tick_precision",
+   "scope": [
+    "track"
+   ],
+   "category": "axis",
+   "old_names": [],
+   "importance": 1,
+   "type": "int",
+   "choices": null,
+   "min": 0,
+   "max": 10,
+   "default": null,
+   "desc_zh": "Y轴刻度标签的小数位数；不设时自动：YMin/YMax 均为整数取0位，YMax 小数位超过4位取2位，其余取1位",
+   "desc_en": "Decimal digits of Y axis tick labels; auto when unset: 0 if the Y range is integral, 2 if YMax has >4 decimals, else 1",
+   "label_zh": "Y轴刻度精度",
+   "label_en": "Y tick precision",
+   "plot_types": [
+    "point",
+    "line",
+    "hist",
+    "ridgeline",
+    "shape"
+   ]
+  },
+  {
+   "name": "yaxis_tick_unit",
+   "scope": [
+    "track"
+   ],
+   "category": "axis",
+   "old_names": [],
+   "importance": 1,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "相邻Y轴刻度之间的数值间隔；不设时按Y值范围等分",
+   "desc_en": "Numeric interval between Y axis ticks; auto-divided from the Y range",
+   "label_zh": "Y轴刻度间隔",
+   "label_en": "Y tick interval",
+   "plot_types": [
+    "point",
+    "line",
+    "hist",
+    "ridgeline",
+    "shape"
+   ],
+   "default_hint_zh": "默认按 Y 值范围自动等分",
+   "default_hint_en": "Auto-divided from the Y value range"
+  },
+  {
+   "name": "yaxis_tick_strokewidth",
+   "scope": [
+    "track"
+   ],
+   "category": "axis",
+   "old_names": [],
+   "importance": 1,
+   "type": "float",
+   "choices": null,
+   "min": 0,
+   "max": null,
+   "default": "1",
+   "desc_zh": "Y轴刻度线的宽度，默认1",
+   "desc_en": "Stroke width of the Y axis ticks, default 1",
+   "label_zh": "Y轴刻度线宽",
+   "label_en": "Y tick stroke width",
+   "plot_types": [
+    "point",
+    "line",
+    "hist",
+    "ridgeline",
+    "shape"
+   ],
+   "default_hint_zh": "默认 1",
+   "default_hint_en": "Default 1"
+  },
+  {
+   "name": "yaxis_tick_direction",
+   "scope": [
+    "track"
+   ],
+   "category": "axis",
+   "old_names": [],
+   "importance": 1,
+   "type": "bool",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "Y轴刻度线朝反方向绘制；设置即生效（Down/Up 取值引擎不看），留空=默认方向",
+   "desc_en": "Flip the Y tick direction; the engine acts on the key merely existing (its Down/Up value is ignored), empty = default",
+   "label_zh": "Y刻度方向",
+   "label_en": "Y tick direction",
+   "plot_types": [
+    "point",
+    "line",
+    "hist",
+    "ridgeline",
+    "shape"
+   ],
+   "presence_only": true
+  },
+  {
+   "name": "track_text_overlap",
+   "scope": [
+    "track"
+   ],
+   "category": "track",
+   "old_names": [],
+   "importance": 0,
+   "type": "text",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "track_text_overlap=0  可以叠  画全部，即原来的",
+   "desc_en": "0 = allow overlap; N = at most N overlapping texts",
+   "label_zh": "track_text_overlap=0  可以叠  画全部，即原来的",
+   "label_en": "Text overlap",
+   "plot_types": [
+    "text"
+   ]
+  },
+  {
+   "name": "xaxis_tick_color",
+   "scope": [
+    "global"
+   ],
+   "category": "axis",
+   "old_names": [],
+   "importance": 1,
+   "type": "color",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "X轴刻度线的颜色，默认黑色",
+   "desc_en": "Color of the X axis ticks, black by default",
+   "label_zh": "X轴刻度颜色",
+   "label_en": "X tick color",
+   "plot_types": []
+  },
+  {
+   "name": "colormap_legend_layout",
+   "scope": [
+    "track"
+   ],
+   "category": "track",
+   "old_names": [],
+   "importance": 0,
+   "type": "enum",
+   "choices": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13"
+   ],
+   "min": null,
+   "max": null,
+   "default": "1",
+   "desc_zh": "colormap_legend_layout  0-10",
+   "desc_en": "Legend layout mode (0-13)",
+   "label_zh": "colormap_legend_layout  0-10",
+   "label_en": "Legend layout",
+   "plot_types": []
+  },
+  {
+   "name": "colormap_legend_gap",
+   "scope": [
+    "global"
+   ],
+   "category": "track",
+   "old_names": [],
+   "importance": 0,
+   "type": "float",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "4.5",
+   "desc_zh": "图例与轨道之间的间距（参与渐变刻度换算，引擎默认4.5）",
+   "desc_en": "Gap between the legend and the track (engine default 4.5)",
+   "label_zh": "前后两个图列的距离",
+   "label_en": "Legend gap",
+   "plot_types": []
+  },
+  {
+   "name": "colormap_gradient_gap",
+   "scope": [
+    "track"
+   ],
+   "category": "track",
+   "old_names": [],
+   "importance": 0,
+   "type": "text",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "相邻渐变色块之间的间距（默认0）",
+   "desc_en": "Gap between adjacent gradient blocks (default 0)",
+   "label_zh": "渐变块间距",
+   "label_en": "Gradient gap",
+   "plot_types": []
+  },
+  {
+   "name": "File1",
+   "scope": [
+    "global"
+   ],
+   "category": "files",
+   "old_names": [],
+   "importance": 5,
+   "type": "file",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "输入数据文件FileX路径",
+   "desc_en": "Main input data file, format: Chr Start End Value1 ... (NA = skip)",
+   "label_zh": "输入数据文件FileX路径（必需，放最前）",
+   "label_en": "Data file 1",
+   "plot_types": [],
+   "required": true
+  },
+  {
+   "name": "FileX",
+   "scope": [
+    "global"
+   ],
+   "category": "files",
+   "old_names": [],
+   "importance": 4,
+   "type": "file",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "第N个输入数据文件路径",
+   "desc_en": "Optional extra data file (File2, File3, ...)",
+   "label_zh": "第N个输入数据文件路径",
+   "label_en": "Data file N",
+   "plot_types": [],
+   "required": false
+  },
+  {
+   "name": "hist_No_UD",
+   "scope": [
+    "track"
+   ],
+   "category": "data",
+   "old_names": [],
+   "importance": 0,
+   "type": "bool",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": null,
+   "desc_zh": "双列直方图时不绘制上下端刻度标记（内部参数）；设置即生效，留空=不生效",
+   "desc_en": "Suppress the upper/lower tick marks of a two-column histogram (internal); setting it takes effect, empty = off",
+   "label_zh": "hist 不画上下端刻度",
+   "label_en": "Histogram: hide U/D ticks",
+   "plot_types": [],
+   "required": false,
+   "presence_only": true
+  },
+  {
+   "name": "colormap_legend_sizeratio",
+   "scope": [
+    "track"
+   ],
+   "category": "track",
+   "old_names": [],
+   "importance": 0,
+   "type": "text",
+   "choices": null,
+   "min": null,
+   "max": null,
+   "default": "1.0",
+   "desc_zh": "调整图例渐变的大小比例，设为0可隐藏图例",
+   "desc_en": "Size ratio of the gradient legend (0 hides it)",
+   "label_zh": "图例大小比例",
+   "label_en": "Legend size ratio",
+   "plot_types": []
+  }
+ ],
+ "validation": {
+  "in_xlsx_not_in_code": [
+   "File1",
+   "FileX"
+  ],
+  "in_code_not_in_xlsx": [],
+  "defaults_out_of_range": []
+ }
+}
