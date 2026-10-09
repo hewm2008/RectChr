@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# PyInstaller / build artifacts
+dist/
+build/
+*.manifest
+
+# bundled runtimes (portable Strawberry Perl on Windows)
+gui_runtime/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*~

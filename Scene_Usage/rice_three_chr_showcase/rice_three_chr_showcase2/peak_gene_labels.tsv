@@ -1,0 +1,3 @@
+#Chr	Start	End	Gene_id	Peak_class
+Chr01	12740063	12740252	gene1	Major_GWAS_peak
+Chr02	22962817	22964068	gene2	Major_GWAS_peak
