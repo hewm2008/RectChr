@@ -14,6 +14,7 @@ from ..core.conf_io import abspath_for
 from ..core.schema import Schema
 from ..i18n import I18N
 from ..theme import make_card
+from .files_panel import PathNameEdit
 from .param_form import ParamRow
 
 
@@ -169,9 +170,11 @@ class ParamsSummaryTab(QWidget):
             return
         for idx, edit in self._file_rows.items():
             new = files[idx] if idx < len(files) else ""
-            if edit.text() != new:
-                edit.setText(new)
-                edit.setToolTip(new)
+            # compare the FULL PATH, not edit.text(): the field shows only the
+            # file name, so two files sharing a name (a/x.tsv, b/x.tsv) would
+            # otherwise look unchanged and the row would keep a stale tooltip
+            if edit.full_path() != new:
+                edit.setPathText(new)
 
     # ------------------------------------------------------------- rows
     def _make_param_row(self, scope, key, value):
@@ -190,14 +193,14 @@ class ParamsSummaryTab(QWidget):
         lay = QHBoxLayout(cont)
         lay.setContentsMargins(0, 0, 0, 0)
         lay.setSpacing(4)
-        lab = QLabel("File%d" % (idx + 1))
+        lab = QLabel("File%d:" % (idx + 1))
         lab.setMinimumWidth(44)
-        edit = QLineEdit(path)
+        edit = PathNameEdit()
         edit.setMinimumWidth(80)
         edit.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Fixed)
-        edit.setToolTip(path)
+        edit.setPathText(path)
         edit.textEdited.connect(lambda s, i=idx: self._file_edited(i, s))
-        edit.textEdited.connect(edit.setToolTip)
+        edit.textEdited.connect(edit._typedPath)
         browse = QPushButton(I18N.tr("choose"))
         browse.setFixedWidth(70)
         browse.clicked.connect(lambda _c=False, i=idx: self._file_browse(i))

@@ -15,7 +15,9 @@ from pathlib import Path
 import openpyxl
 
 ROOT = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parents[2]
-XLSX = ROOT / "NewParaList.xlsx"
+# the spec sheet ships under doc/ in the released tree; accept both layouts
+XLSX = next((p for p in (ROOT / "NewParaList.xlsx", ROOT / "doc" / "NewParaList.xlsx")
+             if p.is_file()), ROOT / "NewParaList.xlsx")
 OUT = ROOT / "gui" / "resources" / "params_schema.json"
 
 # ---------------------------------------------------------------- categories
@@ -176,7 +178,7 @@ EN = {
     "yaxis_tick_unit": ("Y tick unit", "Unit of the Y axis ticks"),
     "yaxis_tick_strokewidth": ("Y tick stroke width", "Stroke width of the Y axis"),
     "yaxis_tick_direction": ("Y tick direction", "Draw Y ticks Up or Down"),
-    "track_geom_shape": ("Shape type", "Shape type for shape plots (0-13)"),
+    "track_geom_shape": ("Shape type", "Shape type for shape plots (0-20, comma-separated per value)"),
     "track_geom_shape_size": ("Shape size ratio", "Size ratio of shapes"),
     "track_point_size": ("Point size ratio", "Size ratio of points"),
     "track_text_size": ("Text size ratio", "Font size ratio of texts"),
@@ -505,6 +507,32 @@ PARAM_OVERRIDES = {
         "desc_zh": "调整图例渐变的大小比例，设为0可隐藏图例",
     },
 
+    # ---- v1.50B: shape 20 (two facing half circles) ----
+    # SVGgetShape cases 14-19 are half-circle variants and case 20 is the
+    # centromere-style )( pair; LocalUtils::plot_shape accepts it explicitly
+    # ($ccc[$k] <= 20). The xlsx still says 0-13, which made the GUI spin box
+    # refuse every half-circle shape the engine had already gained.
+    #
+    # type "intlist", not "int": the engine reads this as a comma-separated
+    # list with one shape per value index ("14,20,19"), and it silently drops
+    # any item outside [min, max], falling back to its own automatic shape for
+    # that index. A QSpinBox cannot hold a list -- loading such a conf showed
+    # 0 and re-toggling the row wrote 0 back, destroying the setting.
+    "track_geom_shape": {
+        "type": "intlist", "max": 20,
+        "label_zh": "画形状的类型选择",
+        "desc_zh": "shape 绘图中所用形状类型，按取值序号用逗号分隔："
+                   "0-13 为常规几何形状（圆/方/三角等），14-19 为半圆与半椭圆的组合，"
+                   "20 为两个相向的半圆 )(（着丝粒样式）；"
+                   "超出 0-20 的项会被引擎忽略并改用该序号的自动默认形状",
+        "desc_en": "Shape type, comma-separated, one per value index: "
+                   "0-13 basic geometry (circle, square, triangle, ...), "
+                   "14-19 half-circle and half-ellipse variants, 20 two facing "
+                   "half circles )( (centromere style); items outside 0-20 are "
+                   "dropped by the engine, which then uses its automatic shape "
+                   "for that index",
+    },
+
     # ---- v0.14.6: type corrections verified against the engine ----------
     # a font-size scale ratio, NOT a color (was rendered as a color picker)
     "label_size": {
@@ -551,6 +579,18 @@ PARAM_OVERRIDES = {
         "desc_zh": "是否绘制该层背景：1=显示（默认），0=不绘制背景；LinkS 建议设为0",
         "desc_en": "Draw this track's background: 1 = shown (default), 0 = hidden; "
                    "the engine suggests 0 for LinkS",
+    },
+    # a height RATIO, not an integer: the engine multiplies it by track_height
+    # without any int cast or clamp (ConfigDataLoader.pm:243 default 1;
+    # RectChrPlot.pm:213 / GenomicLinkPlot.pm:643,649,855,861,867), and the
+    # shipped examples already use 0.2 / 0.5
+    "track_bg_height_ratio": {
+        "type": "float", "min": 0, "max": None, "decimals": 3,
+        "label_zh": "此层背景高度占轨道高度的比例", "label_en": "Track bg height ratio",
+        "desc_zh": "本层染色体背景条的高度占 track_height 的比例，可填小数"
+                   "（如 0.35），不设时为 1",
+        "desc_en": "Height of this track's chromosome background as a proportion "
+                   "of track_height; decimals allowed (e.g. 0.35), 1 when unset",
     },
     # garbled label; the value is ignored (presence sets IsNumber=0)
     "as_flag": {

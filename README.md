@@ -51,7 +51,7 @@ The <b>new version</b> will be updated and maintained in <b>[hewm2008/RectChr](h
 </br><p align="center"><b>[hewm2008/RectChr](https://github.com/hewm2008/RectChr)</b></p>
 
 <b> 2.1 下载 Download</b>
-</br> Linux / macOS / Windows: [Download v1.50](https://github.com/hewm2008/RectChr/archive/v1.50.tar.gz)
+</br> Linux / macOS / Windows: [Download v1.50D](https://github.com/hewm2008/RectChr/archive/v1.50D.tar.gz)
 </br> Windows 用户可直接使用图形界面（GUI），需安装 [Perl](https://strawberryperl.com/)和[Python3](https://www.python.org/)。
 
   </br> <b>2.2 预依赖 Pre-install</b>
@@ -213,7 +213,7 @@ The following is a simple list of 14 drawing methods,see
 
 * Example 2) [T2T Genome](https://github.com/hewm2008/RectChr/blob/main/Scene_Usage/example02_T2T_telo)
 ![out.png](https://github.com/hewm2008/RectChr/blob/main/Scene_Usage/example02_T2T_telo/OUT1.png)
-![out.png](https://github.com/hewm2008/RectChr/blob/main/Scene_Usage/example02_T2T_telo/OUT3.png)
+![out.png](https://github.com/hewm2008/RectChr/blob/main/Scene_Usage/example02_T2T_telo/OUT2.png)
 
 * Example 3) [ParentalMaker](https://github.com/hewm2008/RectChr/blob/main/Scene_Usage/example03_ParentalMaker/)
 ![out.png](https://github.com/hewm2008/RectChr/blob/main/Scene_Usage/example03_ParentalMaker/OUT1.png)

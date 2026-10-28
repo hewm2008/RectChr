@@ -7,6 +7,7 @@ logo integration, plot_type icons, parameter tab bar styling, track close
 buttons, Track ID row, lazy track pages and the packaging metadata.
 """
 import os
+import re
 import sys
 import tempfile
 from pathlib import Path
@@ -110,8 +111,8 @@ def _run_all():
           and all(close_btn(n) is not None for n in win.model.tracks))
     win.show()
     app.processEvents()
-    for dark, pal, bg, border in ((False, light_palette(), "#dcebe9", "#a7c5c0"),
-                                  (True, dark_palette(), "#203d3a", "#42645f")):
+    for dark, pal, bg, border in ((False, light_palette(), "#f3f6f9", "#b7c9dc"),
+                                  (True, dark_palette(), "#203e60", "#4c7dac")):
         app.setPalette(pal)
         app.setStyleSheet(stylesheet(dark))
         app.processEvents()
@@ -153,6 +154,28 @@ def _run_all():
     labels = [x for x in win.addrem_row.findChildren(QLabel) if x.text() == "Track ID"]
     check("Track ID: label on both groups, bound to the spins",
           len(labels) == 2 and {x.buddy() for x in labels} == {win.add_spin, win.rem_spin})
+
+    # "reset track" wording: I18N.tr() falls back to the raw key when a key is
+    # missing, so a typo would render as "reset_track" instead of failing loudly
+    from gui.i18n import STRINGS as _STRINGS, I18N as _I18N
+    for lang, word, lowered in (("zh", "重置", "重置"), ("en", "Reset", "reset")):
+        win.lang_combo.setCurrentIndex(0 if lang == "zh" else 1)
+        caption = win.rem_btn.text()
+        check("reset track: button caption %s" % lang,
+              word in caption and "_" not in caption and "移除" not in caption, caption)
+        check("reset track: spin tooltip %s" % lang,
+              word in win.rem_spin.toolTip() and "_" not in win.rem_spin.toolTip())
+        check("reset track: tab close tooltip %s" % lang,
+              word in bar.tabButton(win.param_tabs.indexOf(win.track_pages[1]),
+                                     QTabBar.RightSide).toolTip())
+        # the English prompt reads "This resets the last track section"
+        check("reset track: last-section prompt %s" % lang,
+              lowered in _I18N.tr("reset_last_track").lower()
+              and _I18N.tr("reset_last_track") != "reset_last_track")
+    win.lang_combo.setCurrentIndex(0)
+    check("reset track: no stale i18n key left",
+          not any(k in _STRINGS for k in
+                  ("remove_track", "track_remove_which", "remove_last_track")))
     win.param_tabs.setCurrentWidget(win.track_pages[1])
     win.rem_spin.setValue(3)
     win.rem_btn.click()
@@ -220,6 +243,198 @@ def _run_all():
     check("plot alias: save writes canonical spelling",
           "plot_type=line\n" in t1 and "plot_type=lines" not in saved)
 
+    # -------------------------------------------------- track_bg_height_ratio
+    # a HEIGHT RATIO: the engine multiplies it into track_height without an int
+    # cast, so the GUI must offer decimals, not a QSpinBox
+    from PySide6.QtWidgets import QDoubleSpinBox, QSpinBox
+    from gui.ui.param_form import ParamRow
+    bg = Schema.param("track_bg_height_ratio")
+    check("bg ratio: schema is a non-negative float with 3 decimals",
+          bg["type"] == "float" and bg["min"] == 0 and bg["max"] is None
+          and bg["decimals"] == 3)
+    row = ParamRow(bg, "0.2")
+    # editor_lay is the row's layout; the widget itself is _editor
+    bg_edit = row._editor
+    check("bg ratio: editor is a double spin box preloaded from the conf",
+          isinstance(bg_edit, QDoubleSpinBox) and not isinstance(bg_edit, QSpinBox)
+          and abs(bg_edit.value() - 0.2) < 1e-9 and bg_edit.decimals() == 3)
+    bg_edit.setValue(0.35)
+    check("bg ratio: decimals keep three digits and bypass the int normalizer",
+          row.current_value() == "0.35")
+    m4 = ConfModel()
+    m4.tracks = {1: {"track_bg_height_ratio": "0.35"}}
+    row4 = ParamRow(bg, m4.get_param(1, "track_bg_height_ratio"))
+    check("bg ratio: an imported decimal survives round-trip to the conf",
+          abs(row4._editor.value() - 0.35) < 1e-9
+          and "track_bg_height_ratio=0.35\n" in m4.to_conf_text())
+    row4.set_external("2.5")           # > 1 is allowed (no upper bound)
+    check("bg ratio: values above 1 are accepted",
+          abs(row4._editor.value() - 2.5) < 1e-9)
+    row4.set_external("")             # disable -> back to the placeholder
+    check("bg ratio: unset row reads as unset",
+          not row4.enable.isChecked() and row4.current_value() == "")
+    for w in (row, row4):
+        w.deleteLater()
+
+    # -------------------------------------------------- track_geom_shape
+    # the engine reads this as a comma-separated list, one shape per distinct
+    # value index, and SILENTLY drops any item outside [min, max] (falling back
+    # to its own automatic shape for that index). It was typed "int" in the
+    # schema, so a QSpinBox stood in for the list: loading "14,20,19" showed 0
+    # and re-toggling the row wrote 0 back, destroying the setting.
+    from PySide6.QtWidgets import QLineEdit
+    shape = Schema.param("track_geom_shape")
+    check("shape list: schema is an intlist bounded 0-20",
+          shape["type"] == "intlist" and shape["min"] == 0 and shape["max"] == 20)
+    ms = ConfModel()
+    ms.tracks = {11: {"track_geom_shape": "14,20,19"}}
+    srow = ParamRow(shape, ms.get_param(11, "track_geom_shape"))
+    srow.changed.connect(lambda k, v: ms.set_param(11, k, v))
+    sedit = srow._editor
+    check("shape list: editor is a line edit holding the list verbatim",
+          isinstance(sedit, QLineEdit) and sedit.text() == "14,20,19"
+          and srow.current_value() == "14,20,19")
+    check("shape list: an in-range list is not flagged",
+          srow._intlist_bad == [] and sedit.styleSheet() == "")
+    # the exact data-loss path that motivated the intlist type
+    srow.enable.setChecked(False)
+    srow.enable.setChecked(True)
+    check("shape list: re-toggling the row no longer clobbers the list",
+          ms.get_param(11, "track_geom_shape") == "14,20,19"
+          and "track_geom_shape=14,20,19\n" in ms.to_conf_text())
+    # duplicates are legal; an out-of-range item must be surfaced, not hidden
+    sedit.setText("1,1,2,21,4,20")
+    app.processEvents()
+    check("shape list: duplicates kept, out-of-range item flagged",
+          srow._intlist_bad == [21] and srow.current_value() == "1,1,2,21,4,20"
+          and bool(sedit.styleSheet()) and "21" in sedit.toolTip())
+    sedit.setText("14, 20 , 19")
+    check("shape list: spaces normalised away on save",
+          srow.current_value() == "14,20,19" and srow._intlist_bad == [])
+    # syntactically malformed input must be untypable...
+    malformed = []
+    for bad in ("-1", "abc", "1,,2", "1,2x"):
+        QLineEdit.setText(sedit, bad)
+        malformed.append(not sedit.hasAcceptableInput())
+    check("shape list: validator rejects negative, non-numeric, empty and partial input",
+          all(malformed), str(malformed))
+    # ...while a well-formed but out-of-range item is accepted and flagged: the
+    # engine ignores it, so the conf must keep it verbatim rather than have the
+    # GUI silently substitute a different value
+    QLineEdit.setText(sedit, "0,999")
+    app.processEvents()
+    check("shape list: out-of-range item is kept but flagged, not rewritten",
+          sedit.hasAcceptableInput() and srow._intlist_bad == [999]
+          and srow.current_value() == "0,999")
+    QLineEdit.setText(sedit, "20,20")
+    app.processEvents()
+    check("shape list: shape 20 (two facing half circles) is accepted",
+          sedit.hasAcceptableInput() and srow._intlist_bad == []
+          and srow.current_value() == "20,20")
+    srow.deleteLater()
+
+    # -------------------------------------------------- file path readability
+    # a run absolutizes every File path, so all rows share one long prefix and
+    # the visible text is now just the NAME; the full path lives in the tooltip
+    from gui.ui.files_panel import FilesBar, FilesPanel, PathNameEdit, display_name
+    base = "/data/home/liaojing/08.Test/Deve/RectChr-main/Scene_Usage"
+    long_path = base + "/S01.bin.gz"
+    check("paths: display_name keeps the basename, empty stays empty",
+          display_name(long_path) == "S01.bin.gz" and display_name("") == ""
+          and display_name(None) == "" and display_name("  /a/b/c.txt ") == "c.txt")
+    panel = FilesPanel()
+    panel.set_files([long_path, base + "/S02.bin.gz"])
+    items = [panel.listw.item(i) for i in range(panel.listw.count())]
+    check("paths: list shows 'FileN: <name>' and keeps the full path in the tooltip",
+          [it.text() for it in items] == ["File1: S01.bin.gz", "File2: S02.bin.gz"]
+          and [it.toolTip() for it in items] == [long_path, base + "/S02.bin.gz"])
+    check("paths: no custom delegate, plain elide, no wrap, no h-scrollbar",
+          not hasattr(panel.listw.itemDelegate(), "split")
+          and panel.listw.textElideMode() == Qt.ElideRight
+          and not panel.listw.wordWrap()
+          # while the horizontal scrollbar is visible the rows are laid out at
+          # their full text width, so nothing ever elides
+          and panel.listw.horizontalScrollBarPolicy() == Qt.ScrollBarAlwaysOff)
+    panel.resize(300, 200)
+    panel.show()
+    app.processEvents()
+    check("paths: no horizontal scrollbar once the panel is laid out",
+          not panel.listw.horizontalScrollBar().isVisible())
+    # empty File1 must not read as an empty row
+    panel.set_files(["", long_path])
+    items2 = [panel.listw.item(i) for i in range(panel.listw.count())]
+    check("paths: an empty slot shows the em dash, not a blank row",
+          items2[0].text() == "File1: —" and items2[1].text() == "File2: S01.bin.gz")
+    bar = FilesBar()
+    bar.set_files([long_path, base + "/S99.bin.gz"])
+    edits = bar.findChildren(PathNameEdit)
+    check("paths: FilesBar fields show the name, left-aligned, full path on hover",
+          len(edits) == 2
+          and [e.text() for e in edits] == ["S01.bin.gz", "S99.bin.gz"]
+          and all(e.alignment() == Qt.AlignLeft for e in edits)
+          and edits[0].full_path() == long_path
+          and edits[0].toolTip() == long_path)
+    # the FileN caption is a separate left-hand label in every editable row
+    check("paths: FileN captions are left of the field, with a colon",
+          [x.text() for x in bar.findChildren(QLabel) if x.text().startswith("File")]
+          == ["File1:", "File2:"],
+          str([x.text() for x in bar.findChildren(QLabel) if x.text().startswith("File")]))
+    # typing must keep the whole path: setPathText reduces to the name, but the
+    # model has to receive what the user actually typed
+    typed = base + "/example06_DepthCov/03.ONT.bed.gz"
+    edits[0].setText(typed)
+    edits[0].textEdited.emit(typed)
+    app.processEvents()
+    check("paths: typed path is stored whole, not reduced to its name",
+          bar.current_files()[0] == typed and edits[0].full_path() == typed
+          and edits[0].toolTip() == typed)
+    bar.hide()
+    from gui.ui.params_summary import ParamsSummaryTab
+    summary = ParamsSummaryTab(ConfModel())
+    summary.model.files = [long_path]
+    summary.refresh()
+    sum_edits = summary.findChildren(PathNameEdit)
+    check("paths: summary tab file rows match",
+          len(sum_edits) == 1 and sum_edits[0].text() == "S01.bin.gz"
+          and sum_edits[0].alignment() == Qt.AlignLeft
+          and sum_edits[0].toolTip() == long_path)
+    check("paths: summary tab caption is 'File1:' too",
+          "File1:" in [x.text() for x in summary.findChildren(QLabel)])
+    # same NAME, different directory: the row text cannot tell them apart, so
+    # sync_files must compare full paths or the tooltip goes stale
+    same_a, same_b = "/tmp/a/data.tsv", "/tmp/b/data.tsv"
+    summary.sync_files([same_a])
+    summary.sync_files([same_b])
+    app.processEvents()
+    check("paths: same name in a different directory still refreshes",
+          sum_edits[0].full_path() == same_b and sum_edits[0].toolTip() == same_b)
+    # the folded read-only list (>ROW_LIMIT files) must match the editable rows
+    big = FilesBar()
+    big.set_files(["%s/S%02d.bin.gz" % (base, i) for i in range(1, 11)])
+    check("paths: folded list captions are 'FileN:' with the name in a read-only field",
+          big.folded()
+          and [x.text() for x in big.findChildren(QLabel) if x.text().startswith("File")]
+          == ["File%d:" % i for i in range(1, 11)]
+          and [e.text() for e in big.findChildren(PathNameEdit)]
+          == ["S%02d.bin.gz" % i for i in range(1, 11)]
+          and all(e.isReadOnly() and e.alignment() == Qt.AlignLeft
+                  for e in big.findChildren(PathNameEdit)))
+    big.deleteLater()
+    for w in (panel, bar, summary):
+        w.deleteLater()
+
+    # -------------------------------------------------- window title
+    # the working dir already appears in the status bar and the run log, so the
+    # title must not repeat it in parentheses
+    check("title: conf name only, no redundant path",
+          win.windowTitle() == "%s — %s" % (_I18N.tr("app_title"), win.out_name)
+          and "(" not in win.windowTitle() and str(win.out_dir) not in win.windowTitle(),
+          win.windowTitle())
+    win.out_name = "in1"
+    win._update_title()
+    check("title: follows the opened/saved conf name",
+          win.windowTitle().endswith("— in1"), win.windowTitle())
+
     from unittest.mock import patch
     from PySide6.QtCore import QUrl
     from PySide6.QtWidgets import QPlainTextEdit, QPushButton, QToolBar, QDialogButtonBox
@@ -283,11 +498,16 @@ def _run_all():
               and any(dest == "gui/resources" for src, dest in data))
         if platform == "darwin":
             bundle = calls["BUNDLE"]
+            # GUI_VERSION may carry a letter suffix (1.50B); Apple requires
+            # CFBundleShortVersionString to be digits only
+            plist = bundle["info_plist"]
             check("macOS: app identity and icon",
                   bundle["name"] == "RectChr.app" and Path(bundle["icon"]).is_file()
-                  and bundle["info_plist"]["CFBundleDisplayName"] == "RectChr"
-                  and bundle["info_plist"]["CFBundleName"] == "RectChr"
-                  and bundle["info_plist"]["CFBundleVersion"] == GUI_VERSION.lstrip("v"))
+                  and plist["CFBundleDisplayName"] == "RectChr"
+                  and plist["CFBundleName"] == "RectChr"
+                  and plist["CFBundleVersion"] == GUI_VERSION.lstrip("v")
+                  and plist["CFBundleShortVersionString"] == "1.50"
+                  and re.fullmatch(r"[0-9]+(\.[0-9]+)*", plist["CFBundleShortVersionString"]))
             check("macOS: engine, palettes and manuals bundled",
                   {"bin", "ColorsBrewer", "gui/doc"} <= {dest for src, dest in data})
         else:

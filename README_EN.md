@@ -39,7 +39,7 @@ The GUI supports data preview, visual parameter configuration, plot-type switchi
 
 ### Download
 
-Get the source from [hewm2008/RectChr](https://github.com/hewm2008/RectChr), or download the [v1.50 archive](https://github.com/hewm2008/RectChr/archive/v1.50.tar.gz).
+Get the source from [hewm2008/RectChr](https://github.com/hewm2008/RectChr), or download the [v1.50D archive](https://github.com/hewm2008/RectChr/archive/v1.50D.tar.gz).
 
 ```bash
 git clone https://github.com/hewm2008/RectChr.git
@@ -200,7 +200,7 @@ Explore individual plot types in [Basic_Tutorials](Basic_Tutorials), then combin
 [Data and configuration](Scene_Usage/example02_T2T_telo)
 
 ![T2T genome overview](Scene_Usage/example02_T2T_telo/OUT1.png)
-![T2T genome tracks](Scene_Usage/example02_T2T_telo/OUT3.png)
+![T2T genome tracks](Scene_Usage/example02_T2T_telo/OUT2.png)
 
 #### Parental markers
 

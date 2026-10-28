@@ -1,6 +1,7 @@
 """Reusable parameter form built from the schema (one instance per section)."""
 from PySide6.QtCore import QSize, Qt, Signal
-from PySide6.QtGui import QColor, QPainter, QPixmap
+from PySide6.QtGui import (QColor, QPainter, QPixmap,
+                           QRegularExpressionValidator)
 from PySide6.QtWidgets import (QCheckBox, QColorDialog, QComboBox, QDialog,
                                QDialogButtonBox, QDoubleSpinBox, QFrame,
                                QHBoxLayout, QLabel, QLineEdit, QListWidget,
@@ -45,13 +46,17 @@ def _fmt_tooltip(p):
 
 def _range_text(p):
     """Numeric bounds as display text, e.g. '范围 5–∞' / 'range 5–∞'."""
-    if p.get("type") not in ("int", "float"):
+    t = p.get("type")
+    if t not in ("int", "float", "intlist"):
         return ""
     mn, mx = p.get("min"), p.get("max")
     if mn is None and mx is None:
         return ""
     lo = "-∞" if mn is None else str(mn)
     hi = "∞" if mx is None else str(mx)
+    if t == "intlist":
+        # the bounds apply to EACH item of the list, not to the whole value
+        return ("每项 %s–%s" if I18N.lang() == "zh" else "each item %s-%s") % (lo, hi)
     return ("范围 %s–%s" if I18N.lang() == "zh" else "range %s–%s") % (lo, hi)
 
 
@@ -301,6 +306,62 @@ class ParamRow(QWidget):
             self._palette_btn.set_palette(dlg.chosen)
             self._editor.setText(dlg.chosen)       # fires textChanged -> emit
 
+    @staticmethod
+    def _intlist_items(text):
+        """Split "14, 20 ,19" into ints; unparsable items are skipped."""
+        out = []
+        for raw in str(text).replace("，", ",").split(","):
+            raw = raw.strip()
+            if raw:
+                try:
+                    out.append(int(raw))
+                except ValueError:
+                    pass
+        return out
+
+    def _make_intlist_editor(self, p, value):
+        """Editor for a comma-separated list of small ints (one per value index).
+
+        track_geom_shape is such a list: "14,20,19" assigns shape 14 to the
+        first distinct value, 20 to the second, and so on. A QSpinBox cannot
+        hold that -- it showed 0 and re-toggling the row wrote 0 back, silently
+        destroying the setting (the engine, meanwhile, drops any item outside
+        [min, max] and quietly falls back to its automatic shape for that
+        index). So the editor accepts the list verbatim and flags the items the
+        engine will drop instead of hiding them."""
+        lay = self.editor_lay = QHBoxLayout()
+        lay.setContentsMargins(0, 0, 0, 0)
+        lay.setSpacing(4)
+        w = QLineEdit()
+        # only comma-separated non-negative integers: this keeps "-1", "abc"
+        # and empty items out, all of which the engine would silently turn into
+        # a circle (or, for -1, into no shape at all)
+        w.setValidator(QRegularExpressionValidator(r"^\s*\d{1,3}\s*(,\s*\d{1,3}\s*)*$"))
+        w.setPlaceholderText("14,20,19")
+        w.setText(self._initial_value(p, value))
+        lay.addWidget(w, 1)
+        self._editor = w
+        self._intlist_lo = p.get("min") if p.get("min") is not None else 0
+        self._intlist_hi = p.get("max")
+        self._bind_line(w)
+        w.textChanged.connect(lambda _s: self._refresh_intlist_state())
+        self._refresh_intlist_state()
+        return lay
+
+    def _refresh_intlist_state(self):
+        """Mark the editor when the engine would drop one of its items."""
+        w = getattr(self, "_editor", None)
+        if w is None or not isinstance(w, QLineEdit):
+            return
+        lo, hi = self._intlist_lo, self._intlist_hi
+        bad = [n for n in self._intlist_items(w.text())
+               if n < lo or (hi is not None and n > hi)]
+        w.setStyleSheet("border: 1px solid #c0392b;" if bad else "")
+        w.setToolTip(I18N.tr("intlist_out_of_range", items=", ".join(map(str, bad)),
+                             lo=lo, hi=("∞" if hi is None else hi))
+                     if bad else w.toolTip())
+        self._intlist_bad = bad
+
     def _make_editor(self, p, value):
         t = p.get("type") or "text"
         lay = self.editor_lay = QHBoxLayout()
@@ -310,6 +371,9 @@ class ParamRow(QWidget):
 
         if p["name"] == "colormap_brewer_name":
             return self._make_palette_editor(p, value)
+
+        if t == "intlist":
+            return self._make_intlist_editor(p, value)
 
         if t == "bool":
             w = QComboBox()
@@ -357,7 +421,7 @@ class ParamRow(QWidget):
                 w.setValue(0)
         elif t == "float":
             w = QDoubleSpinBox()
-            w.setDecimals(6)
+            w.setDecimals(p.get("decimals") or 6)   # e.g. track_bg_height_ratio: 3
             # honour the schema range exactly like the int editor does,
             # otherwise tooltips advertise limits the editor does not enforce
             lo = p.get("min") if p.get("min") is not None else -1e18
@@ -464,6 +528,11 @@ class ParamRow(QWidget):
             return str(self._editor.value())
         if t == "float":
             return self._fmt_num(self._editor.value())
+        if t == "intlist":
+            # stored verbatim, minus the spaces the user typed for readability;
+            # out-of-range items are kept too (the engine ignores them anyway and
+            # silently substituting a default here would misreport the conf)
+            return ",".join(str(n) for n in self._intlist_items(self._editor.text()))
         if t == "color":
             return self._color_txt.text()
         if t == "file":
@@ -503,6 +572,11 @@ class ParamRow(QWidget):
                     self._editor.setValue(int(float(value)) if value else 0)
                 except (TypeError, ValueError, OverflowError):
                     self._editor.setValue(0)
+            elif t == "intlist":
+                self._editor.setText(value)
+                # an imported list may carry items the engine will drop; keep
+                # the warning in sync with what is now displayed
+                self._refresh_intlist_state()
             elif t == "float":
                 try:
                     self._editor.setValue(float(value) if value else 0.0)

@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 from PySide6.QtCore import QSettings, QTimer, Qt, QUrl
-from PySide6.QtGui import QAction, QKeySequence
+from PySide6.QtGui import QAction, QActionGroup, QKeySequence
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
                                QDialogButtonBox,
                                QDockWidget, QFileDialog, QFrame, QHBoxLayout, QLabel,
@@ -16,7 +16,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
 
 from .. import GUI_VERSION
 from ..core.conf_io import ConfModel, abspath_for
-from ..theme import make_card
+from ..theme import apply_theme, make_card
 from ..core.runner import ENGINE, GUI_DIR, ROOT, RectChrRunner, find_perl
 from ..i18n import I18N
 from .files_panel import FilesPanel
@@ -87,6 +87,16 @@ class MainWindow(QMainWindow):
                 w, h = min(w, avail.width()), min(h, avail.height())
         self.resize(w, h)
 
+    def _set_theme_mode(self, mode, save=True):
+        """Apply and persist the View-menu theme selection."""
+        modes = {"light": self.act_theme_light, "dark": self.act_theme_dark,
+                 "system": self.act_theme_system}
+        mode = mode if mode in modes else "system"
+        modes[mode].setChecked(True)
+        apply_theme(QApplication.instance(), mode)
+        if save:
+            self.settings.setValue("theme_mode", mode)
+
     # ================================================================ UI
     def _build_toolbar(self):
         tb = QToolBar("main")
@@ -120,6 +130,17 @@ class MainWindow(QMainWindow):
         self.act_about.triggered.connect(self._show_about)
         self.act_reset_layout = QAction(I18N.tr("reset_layout"), self)
         self.act_reset_layout.triggered.connect(self._reset_layout)
+        self.theme_action_group = QActionGroup(self)
+        self.theme_action_group.setExclusive(True)
+        self.act_theme_light = QAction(I18N.tr("theme_light"), self)
+        self.act_theme_dark = QAction(I18N.tr("theme_dark"), self)
+        self.act_theme_system = QAction(I18N.tr("theme_system"), self)
+        for action, mode in ((self.act_theme_light, "light"),
+                             (self.act_theme_dark, "dark"),
+                             (self.act_theme_system, "system")):
+            action.setCheckable(True)
+            self.theme_action_group.addAction(action)
+            action.triggered.connect(lambda _checked=False, m=mode: self._set_theme_mode(m))
 
         # ---- menu buttons (same row as the regular buttons)
         self.menu_file = QMenu(I18N.tr("menu_file"), self)
@@ -134,7 +155,13 @@ class MainWindow(QMainWindow):
         for d in (self.files_dock, self.params_dock, self.log_dock):
             self.menu_view.addAction(d.toggleViewAction())
         self.menu_view.addSeparator()
+        self.menu_theme = QMenu(I18N.tr("theme"), self)
+        self.menu_theme.addActions((self.act_theme_light, self.act_theme_dark,
+                                    self.act_theme_system))
+        self.menu_view.addMenu(self.menu_theme)
+        self.menu_view.addSeparator()
         self.menu_view.addAction(self.act_reset_layout)
+        self._set_theme_mode(str(self.settings.value("theme_mode", "system")), save=False)
         self.menu_help = QMenu(I18N.tr("help"), self)
         self.btn_help_menu = None
         self.menu_help.addAction(self.act_help)
@@ -536,12 +563,12 @@ class MainWindow(QMainWindow):
         row.addSpacing(10)
         self.rem_spin = _spin()
         self.rem_spin.setValue(n_max)
-        self.rem_spin.setToolTip(I18N.tr("track_remove_which"))
+        self.rem_spin.setToolTip(I18N.tr("track_reset_which"))
         rem_label = QLabel("Track ID")
         rem_label.setBuddy(self.rem_spin)
         row.addWidget(rem_label)
         row.addWidget(self.rem_spin)
-        self.rem_btn = QPushButton(I18N.tr("remove_track"))
+        self.rem_btn = QPushButton(I18N.tr("reset_track"))
         self.rem_btn.clicked.connect(self._remove_track)
         row.addWidget(self.rem_btn)
         row.addStretch(1)
@@ -624,7 +651,7 @@ class MainWindow(QMainWindow):
                 close_btn.setText("×")
                 close_btn.setAutoRaise(True)
                 close_btn.setFixedSize(16, 16)
-                close_btn.setToolTip(I18N.tr("remove_track") + " " + str(idx))
+                close_btn.setToolTip(I18N.tr("reset_track") + " " + str(idx))
                 close_btn.setAccessibleName(close_btn.toolTip())
                 close_btn.clicked.connect(
                     lambda _checked=False, target=idx: self._remove_track_by_index(target))
@@ -750,7 +777,11 @@ class MainWindow(QMainWindow):
         self.act_refresh.setToolTip(I18N.tr("refresh_tip"))
         self.add_btn.setText(I18N.tr("add_track"))
         self.add_btn.setToolTip(I18N.tr("add_track_tip"))
-        self.rem_btn.setText(I18N.tr("remove_track"))
+        self.rem_btn.setText(I18N.tr("reset_track"))
+        # the Track ID spins are built once, so their tooltips need the same
+        # retranslate treatment as the buttons
+        self.add_spin.setToolTip(I18N.tr("track_add_which"))
+        self.rem_spin.setToolTip(I18N.tr("track_reset_which"))
         self.act_svg.setText(I18N.tr("export_svg"))
         self.act_png.setText(I18N.tr("export_png"))
         self.act_pdf.setText(I18N.tr("export_pdf"))
@@ -883,7 +914,7 @@ class MainWindow(QMainWindow):
             return
         if len(self.model.tracks) == 1:
             ret = QMessageBox.question(self, I18N.tr("warn_title"),
-                                       I18N.tr("remove_last_track"),
+                                       I18N.tr("reset_last_track"),
                                        QMessageBox.Yes | QMessageBox.No)
             if ret != QMessageBox.Yes:
                 return
@@ -1150,9 +1181,11 @@ class MainWindow(QMainWindow):
             self.statusBar().showMessage(I18N.tr("export_done", f=out))
 
     # ================================================================ misc
-    def _update_title(self, conf_stem=None):
-        name = conf_stem or self.out_name
-        self.setWindowTitle("%s — %s (%s)" % (I18N.tr("app_title"), name, self.out_dir))
+    def _update_title(self):
+        # the working directory is already visible below (status bar shows the
+        # written SVG / loaded conf, the run log shows the full engine command),
+        # so the title keeps just the conf name
+        self.setWindowTitle("%s — %s" % (I18N.tr("app_title"), self.out_name))
 
     def closeEvent(self, ev):
         self.settings.setValue("dock_state", self.saveState())

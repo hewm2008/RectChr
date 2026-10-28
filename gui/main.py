@@ -22,14 +22,14 @@ def main():
         return 2
     from gui.ui.logo import application_icon
 
-    from gui.theme import apply_system_theme
+    from gui.theme import apply_theme
     from gui.ui.main_window import MainWindow
 
     app = QApplication(sys.argv)
     app.setApplicationName("RectChr")
     app.setApplicationDisplayName("RectChr")
     app.setOrganizationName("RectChr")
-    apply_system_theme(app)               # Fusion + follow OS light/dark (live)
+    apply_theme(app, "light")             # saved preference is applied by MainWindow
 
     # under pythonw (no console) uncaught slot exceptions are invisible:
     # surface them in a dialog instead

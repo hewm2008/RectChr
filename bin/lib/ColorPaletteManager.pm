@@ -1401,6 +1401,30 @@ sub SVGgetShape
 			    }
 			);
 		}
+	case 20 {
+            # 两个相向的半圆 )(? 平边朝外、左右相距 2r，两条弧尖正好落在中心轴上，
+			# 只共享这一个点：既不重叠也不会拼成一个圆，中间收成一个尖 —— 这正是
+			# 经典着丝粒符号的形状。
+			# 中间上下那对尖角楔形不属于任何一个半圆（中心处宽 0，越往上下越宽到满宽）。
+			# 先铺一层白底把它们盖掉，看上去就像那里本来没画东西。
+			# 白色是硬编码的：SVGgetShape 拿不到本层的 background_color，
+			# 加参数会牵动所有调用点，这里按画布默认白色处理。
+			my $radius=$size;
+			my $xa=$XX-$radius;               # 左半圆的平边在左，向右鼓 -> )
+			my $xb=$XX+$radius;               # 右半圆的平边在右，向左鼓 -> (
+			my $yt=$YY-$radius;
+			my $yb=$YY+$radius;
+			$svg->rect('x',$xa,'y',$yt,'width',$radius*2,'height',$radius*2,
+			           'fill','#FFFFFF','stroke','none');
+			$svg->path(
+			    d => "M $xa $yt A $radius $radius 0 1 1 $xa $yb Z " .
+	                 "M $xb $yt A $radius $radius 0 1 0 $xb $yb Z",
+			    style => {
+			        fill => $Col,
+			        stroke => 'none'
+			    }
+			);
+		}
 
 
 

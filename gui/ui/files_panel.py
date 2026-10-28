@@ -4,9 +4,10 @@ from pathlib import Path
 
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import (QAbstractItemView, QFileDialog, QHBoxLayout, QLabel,
-                               QLineEdit, QListWidget, QPushButton, QScrollArea,
-                               QSizePolicy, QTableWidget, QTableWidgetItem,
-                               QVBoxLayout, QWidget)
+                               QLineEdit, QListWidget, QListWidgetItem,
+                               QPushButton, QScrollArea, QSizePolicy,
+                               QTableWidget, QTableWidgetItem, QVBoxLayout,
+                               QWidget)
 
 from ..i18n import I18N
 
@@ -27,6 +28,57 @@ def read_rows(path, limit=20):
     except OSError:
         return []
     return rows
+
+
+def display_name(path):
+    """File name of a path, '' for an empty slot.
+
+    A run absolutizes every File path (model.absolutize_paths), so all rows
+    share one long prefix. Showing the name alone is what actually makes the
+    rows tell each other apart; the untruncated absolute path stays available
+    as the tooltip."""
+    text = "" if path is None else str(path).strip()
+    return Path(text).name if text else ""
+
+
+class PathNameEdit(QLineEdit):
+    """Path field showing the FILE NAME, tooltip carrying the full path.
+
+    Both halves used to fight each other: the long shared absolute prefix ate
+    the width and the filename was elided away, so rows looked identical. With
+    the name as the visible text no elision is involved at all. Left aligned —
+    right alignment only made sense while the text ran past the field, and it
+    left a gap between the "FileN:" caption and a short name.
+    """
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self._full_path = ""
+        self.setAlignment(Qt.AlignLeft)
+
+    def full_path(self):
+        """The absolute path behind the displayed name (the tooltip's text)."""
+        return self._full_path
+
+    def setPathText(self, path):
+        """Display the name, remember + expose the full path for the tooltip."""
+        text = "" if path is None else str(path)
+        self._full_path = text
+        self.setText(display_name(text))
+        self.setToolTip(text)
+
+    def _typedPath(self, text):
+        """Slot for textEdited: the user is entering a path, so keep it whole.
+
+        setPathText() reduces a path to its name, but while typing the field
+        must hold exactly what was typed — otherwise the model would receive
+        the name only and lose the directory."""
+        self._full_path = text
+        self.setToolTip(text)
+
+
+# kept as an alias so existing imports do not break
+RightPathEdit = PathNameEdit
 
 
 class FilesBar(QWidget):
@@ -130,10 +182,18 @@ class FilesBar(QWidget):
         v.setContentsMargins(0, 0, 0, 0)
         v.setSpacing(1)
         for i, f in enumerate(self._files):
-            it = QLabel("File%d: %s" % (i + 1, f or "—"))
-            it.setTextInteractionFlags(Qt.TextSelectableByMouse)
-            it.setToolTip(f)
-            v.addWidget(it)
+            # read-only name field; the absolute path stays in the tooltip
+            hrow = QHBoxLayout()
+            hrow.setContentsMargins(0, 0, 0, 0)
+            hrow.setSpacing(4)
+            lab = QLabel("File%d:" % (i + 1))
+            lab.setMinimumWidth(44)
+            it = PathNameEdit()
+            it.setReadOnly(True)
+            it.setPathText(f)
+            hrow.addWidget(lab)
+            hrow.addWidget(it, 1)
+            v.addLayout(hrow)
         v.addStretch(1)
         area.setWidget(inner)
         self.rows_lay.addWidget(area)
@@ -158,18 +218,20 @@ class FilesBar(QWidget):
         row = QHBoxLayout(cont)
         row.setContentsMargins(0, 0, 0, 0)
         row.setSpacing(4)
-        lab = QLabel("File%d" % (idx + 1))
+        lab = QLabel("File%d:" % (idx + 1))
         lab.setMinimumWidth(44)
-        edit = QLineEdit(path)
+        edit = PathNameEdit()
         edit.setPlaceholderText(I18N.tr("file_hint"))
         # decouple the editor from style-dependent size hints: a very long
         # path must never stretch the row (which pushed the x / browse
         # buttons out of view on Windows); the text scrolls inside instead
         edit.setMinimumWidth(80)
         edit.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Fixed)
-        edit.setToolTip(path)
+        edit.setPathText(path)
         edit.textEdited.connect(lambda s, i=idx: self._path_edited(i, s))
-        edit.textEdited.connect(edit.setToolTip)
+        # what the user types IS the path now (the field no longer shows only
+        # the name), so track it for the tooltip and for sync_files comparisons
+        edit.textEdited.connect(edit._typedPath)
         browse = QPushButton(I18N.tr("choose"))
         browse.setObjectName("fileBrowseBtn")
         browse.setFixedWidth(70)
@@ -227,6 +289,18 @@ class FilesPanel(QWidget):
         self.hint.setWordWrap(True)
 
         self.listw = QListWidget()
+        # elide the HEAD, not the tail: all rows share one absolute prefix, so
+        # clipping the tail (Qt default) hid the only distinguishing part.
+        # wrap off, otherwise long paths wrap instead of eliding; the horizontal
+        # scrollbar off too — while it is visible the rows are laid out at
+        # their full text width, so ElideLeft never kicks in
+        # only the file NAME is listed, so a long name is the only thing that
+        # can overflow; keep it one line and let Qt elide its tail. The
+        # horizontal scrollbar must stay off: while it is visible the rows are
+        # laid out at full text width and nothing ever elides.
+        self.listw.setTextElideMode(Qt.ElideRight)
+        self.listw.setWordWrap(False)
+        self.listw.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.add_btn = QPushButton(I18N.tr("add_file"))
         self.del_btn = QPushButton(I18N.tr("remove_file"))
         btns = QHBoxLayout()
@@ -287,7 +361,11 @@ class FilesPanel(QWidget):
         self._files = files
         self.listw.clear()
         for i, f in enumerate(files):
-            self.listw.addItem("File%d: %s" % (i + 1, f if f else "—"))
+            # name only: a run absolutizes every path, so the shared prefix used
+            # to hide the one part that tells the rows apart
+            item = QListWidgetItem("File%d: %s" % (i + 1, display_name(f) or "—"))
+            item.setToolTip(f)                     # full, untruncated path
+            self.listw.addItem(item)
         self.files_changed.emit(list(files))
         self._show_preview()
 

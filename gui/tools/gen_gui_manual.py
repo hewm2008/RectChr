@@ -92,7 +92,8 @@ _PLOT_TYPES = [
      "track_text_size / track_text_angle / track_text_anchor",
      "plot_type = text\nshow_columns = File2:5"),
     ("shape", "形状", "Shape",
-     "按区域绘制几何形状（圆形/方形/三角等 0-13 种）",
+     "按区域绘制几何形状（0-13 常规几何形，14-19 半圆/半椭圆组合，20 两个相向的半圆 )( 着丝粒样式；"
+     "track_geom_shape 按取值序号用逗号分隔填写）",
      "track_geom_shape / track_geom_shape_size",
      "plot_type = shape\ntrack_geom_shape = 3"),
     ("ridgeline", "山脊线", "Ridgeline",
@@ -134,7 +135,8 @@ def _build_blocks(lang, gui_ver, engine_ver, params):
     def table(head, rows): B.append(("table", (head, rows)))
 
     h1("RectChr GUI 使用手册" if zh else "RectChr GUI Manual")
-    p("版本 %s · 引擎 RectChr %s · hewm2008" % (gui_ver, engine_ver))
+    p(("版本 %s · 引擎 RectChr %s · hewm2008" if zh
+        else "GUI %s · Engine RectChr %s · hewm2008") % (gui_ver, engine_ver))
     p("RectChr GUI 是 RectChr（类 circos 的多层级染色体可视化工具）的跨平台图形界面，"
       "同一份程序可在 Windows / Linux / macOS 运行。界面负责配置与预览，出图由 Perl 引擎完成。"
       if zh else
@@ -240,7 +242,9 @@ def _build_blocks(lang, gui_ver, engine_ver, params):
          "show_columns / track_height / yaxis_tick_show"),
         ("text", "文本", "Text", "在对应区域显示文字（基因名/标记名等）",
          "track_text_size / track_text_angle / track_text_anchor"),
-        ("shape", "形状", "Shape", "按区域绘制几何形状（圆形/方形/三角等 0-13 种）",
+        ("shape", "形状", "Shape",
+         "按区域绘制几何形状（0-13 常规几何形，14-19 半圆/半椭圆组合，20 两个相向的半圆 )( 着丝粒样式；"
+         "track_geom_shape 按取值序号用逗号分隔填写）",
          "track_geom_shape / track_geom_shape_size"),
         ("ridgeline", "山脊线", "Ridgeline", "山脊图，展示 QTL/分布的堆叠形态", "track_height"),
         ("PairWiseLink", "彩虹链接", "Pairwise link", "两个基因组/区间之间的彩虹连接线（共线性/变异）",
@@ -368,7 +372,7 @@ def build_html(lang, gui_ver, engine_ver, params, blocks=None):
 
 
 
-def generate(dest_dir, langs=("zh", "en"), gui_ver="1.50", engine_ver="1.50"):
+def generate(dest_dir, langs=("zh", "en"), gui_ver="1.50D", engine_ver="1.50"):
     """Render the manuals (PDF + Word); returns {lang: written Path}.
 
     Requires PySide6 (PDF) and optionally python-docx (Word)."""
@@ -416,7 +420,7 @@ def main():
     try:
         from gui import GUI_VERSION
     except ImportError:
-        GUI_VERSION = "1.50"
+        GUI_VERSION = "1.50D"
     written = generate(dest, gui_ver=GUI_VERSION, engine_ver=engine_ver)
     for lang, p in written.items():
         print("%s: %s (%d bytes)" % (lang, p, p.stat().st_size))

@@ -2494,7 +2494,11 @@ sub plot_shape {
 		if (exists $HashConfi_ref->{$Level}{"track_geom_shape"}) {
 			my @ccc = split(/,/, $HashConfi_ref->{$Level}{"track_geom_shape"});
 			foreach my $k (0 .. $#ccc) {
-				if ($ccc[$k] < 20) {
+				# <= 20 so shape 20 (two facing half circles, the centromere
+				# style) can be requested explicitly. The auto-rotation above
+				# stays at % 20, so layers that do not set track_geom_shape
+				# keep exactly the shapes they had before.
+				if ($ccc[$k] <= 20) {
 					$shapeType[$k] = $ccc[$k];
 				}
 			}
@@ -2575,7 +2579,11 @@ sub plot_shape {
 		if (exists $HashConfi_ref->{$Level}{"track_geom_shape"}) {
 			my @ccc = split(/,/, $HashConfi_ref->{$Level}{"track_geom_shape"});
 			foreach my $k (0 .. $#ccc) {
-				if ($ccc[$k] < 20) {
+				# <= 20 so shape 20 (two facing half circles, the centromere
+				# style) can be requested explicitly. The auto-rotation above
+				# stays at % 20, so layers that do not set track_geom_shape
+				# keep exactly the shapes they had before.
+				if ($ccc[$k] <= 20) {
 					$shapeType[$k] = $ccc[$k];
 				}
 			}
